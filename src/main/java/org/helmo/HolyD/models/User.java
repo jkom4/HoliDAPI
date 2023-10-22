@@ -2,15 +2,13 @@ package org.helmo.HolyD.models;
 
 import jakarta.persistence.*;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "users")
 public class User {
 
     @Id
-    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -18,17 +16,15 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @Column(name = "nom")
     private String nom;
     private String prenom;
     private String email;
     private String passwd;
-    private String nameProvider;
     private String tokenProvider;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "vacance_id")
-    private List<Vacance> vacances;
+    private Collection<Vacance> vacances;
 
     public Long getId() {
         return id;
@@ -78,14 +74,6 @@ public class User {
         this.passwd = passwd;
     }
 
-    public String getNameProvider() {
-        return nameProvider;
-    }
-
-    public void setNameProvider(String nameProvider) {
-        this.nameProvider = nameProvider;
-    }
-
     public String getTokenProvider() {
         return tokenProvider;
     }
@@ -111,13 +99,13 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", role='" + role + '\'' +
+                ", role=" + role +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", email='" + email + '\'' +
                 ", passwd='" + passwd + '\'' +
-                ", nameProvider='" + nameProvider + '\'' +
                 ", tokenProvider='" + tokenProvider + '\'' +
+                ", vacances=" + vacances +
                 '}';
     }
 }
