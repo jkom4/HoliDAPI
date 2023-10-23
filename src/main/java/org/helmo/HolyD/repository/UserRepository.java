@@ -5,8 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User signUp(User user);
-    User signIn(User user);
-
+    User findByEmailAndPasswd(String email, String passwd); //to SignIn
+    boolean existsByEmail(String email); // to verifie if email already exist
 
 }

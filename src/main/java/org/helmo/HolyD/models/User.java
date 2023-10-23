@@ -1,6 +1,6 @@
 package org.helmo.HolyD.models;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.util.Collection;
 import java.util.Objects;
