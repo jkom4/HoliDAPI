@@ -8,15 +8,23 @@ import java.util.Objects;
 public class Lieu {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_Lieu")
+    @SequenceGenerator(name = "id_Lieu", sequenceName = "ID_LIEU", allocationSize = 1)
     private Long id;
 
+    @Column(nullable = false)
     private float longitude;
+    @Column(nullable = false)
     private float latitude;
+    @Column(nullable = false)
     private String rue;
+    @Column(nullable = false)
     private int rueNumero;
+    @Column(nullable = false)
     private int codePostal;
+    @Column(nullable = false)
     private String ville;
+    @Column(nullable = false)
     private String pays;
 
     public Long getId() {

@@ -6,24 +6,32 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
+@Table(name = "UTILISATEUR")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_User")
+    @SequenceGenerator(name = "id_User", sequenceName = "ID_USER", allocationSize = 1)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
+    @ManyToOne(optional = false)
     private Role role;
 
+    @Column(nullable = false)
     private String nom;
+    @Column(nullable = false)
     private String prenom;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String passwd;
-    private String tokenProvider;
+    @Column(nullable = true)
+    private String tokenConnection;
 
-    @OneToMany
-    @JoinColumn(name = "vacance_id")
+    @ManyToOne
+    private Provider tokenProvider;
+
+    @ManyToMany
     private Collection<Vacance> vacances;
 
     public Long getId() {
@@ -74,12 +82,28 @@ public class User {
         this.passwd = passwd;
     }
 
-    public String getTokenProvider() {
+    public String getTokenConnection() {
+        return tokenConnection;
+    }
+
+    public void setTokenConnection(String tokenConnection) {
+        this.tokenConnection = tokenConnection;
+    }
+
+    public Provider getTokenProvider() {
         return tokenProvider;
     }
 
-    public void setTokenProvider(String tokenProvider) {
+    public void setTokenProvider(Provider tokenProvider) {
         this.tokenProvider = tokenProvider;
+    }
+
+    public Collection<Vacance> getVacances() {
+        return vacances;
+    }
+
+    public void setVacances(Collection<Vacance> vacances) {
+        this.vacances = vacances;
     }
 
     @Override
@@ -95,6 +119,7 @@ public class User {
         return Objects.hash(id);
     }
 
+
     @Override
     public String toString() {
         return "User{" +
@@ -104,7 +129,8 @@ public class User {
                 ", prenom='" + prenom + '\'' +
                 ", email='" + email + '\'' +
                 ", passwd='" + passwd + '\'' +
-                ", tokenProvider='" + tokenProvider + '\'' +
+                ", tokenConnection='" + tokenConnection + '\'' +
+                ", tokenProvider=" + tokenProvider +
                 ", vacances=" + vacances +
                 '}';
     }

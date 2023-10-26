@@ -1,16 +1,14 @@
 package org.helmo.HolyD.models;
 
-
 import javax.persistence.*;
-
 import java.util.Objects;
 
 @Entity
-public class Role {
+public class Provider {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_Role")
-    @SequenceGenerator(name = "id_Role", sequenceName = "ID_ROLE", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_Provider")
+    @SequenceGenerator(name = "id_Provider", sequenceName = "ID_PROVIDER", allocationSize = 1)
     private Long id;
 
     @Column(nullable = false)
@@ -36,8 +34,8 @@ public class Role {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Role role = (Role) o;
-        return id.equals(role.id);
+        Provider provider = (Provider) o;
+        return id.equals(provider.id);
     }
 
     @Override
@@ -47,7 +45,7 @@ public class Role {
 
     @Override
     public String toString() {
-        return "Role{" +
+        return "Provider{" +
                 "id=" + id +
                 ", nom='" + nom + '\'' +
                 '}';

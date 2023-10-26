@@ -2,22 +2,31 @@ package org.helmo.HolyD.models;
 
 import javax.persistence.*;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 public class Activite {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_Activite")
+    @SequenceGenerator(name = "id_Activite", sequenceName = "ID_ACTIVITE", allocationSize = 1)
     private Long id;
 
+    @Column(nullable = false)
     private String nom;
+    @Column(nullable = false)
     private String description;
-    private Date dateDebut;
-    private Date dateFin;
+    @Column(nullable = false)
+    private OffsetDateTime dateDebut;
+    @Column(nullable = false)
+    private OffsetDateTime dateFin;
 
-    @OneToOne
+    @ManyToMany
+    private Collection<User> participants;
+
+    @ManyToOne(optional = false)
     private Lieu lieu;
 
     public Long getId() {
@@ -44,19 +53,19 @@ public class Activite {
         this.description = description;
     }
 
-    public Date getDateDebut() {
+    public OffsetDateTime getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(Date dateDebut) {
+    public void setDateDebut(OffsetDateTime dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public Date getDateFin() {
+    public OffsetDateTime getDateFin() {
         return dateFin;
     }
 
-    public void setDateFin(Date dateFin) {
+    public void setDateFin(OffsetDateTime dateFin) {
         this.dateFin = dateFin;
     }
 
@@ -66,6 +75,14 @@ public class Activite {
 
     public void setLieu(Lieu lieu) {
         this.lieu = lieu;
+    }
+
+    public Collection<User> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(Collection<User> participants) {
+        this.participants = participants;
     }
 
     @Override
@@ -79,5 +96,18 @@ public class Activite {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Activite{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", description='" + description + '\'' +
+                ", dateDebut=" + dateDebut +
+                ", dateFin=" + dateFin +
+                ", participants=" + participants +
+                ", lieu=" + lieu +
+                '}';
     }
 }

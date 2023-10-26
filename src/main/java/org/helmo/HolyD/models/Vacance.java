@@ -2,26 +2,27 @@ package org.helmo.HolyD.models;
 
 import javax.persistence.*;
 
+import java.time.OffsetDateTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
 public class Vacance {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_Vacance")
+    @SequenceGenerator(name = "id_Vacance", sequenceName = "ID_VACANCE", allocationSize = 1)
     private Long id;
 
-    private Date dateDebut;
-    private Date dateFin;
+    @Column(nullable = false)
+    private OffsetDateTime dateDebut;
+    @Column(nullable = false)
+    private OffsetDateTime dateFin;
 
     @OneToMany
-    @JoinColumn(name = "activite_id")
     private Collection<Activite> activites;
 
-    @OneToOne
-    @JoinColumn(name = "lieu_id")
+    @ManyToOne(optional = false)
     private Lieu lieu;
 
     @OneToMany
@@ -35,19 +36,19 @@ public class Vacance {
         this.id = id;
     }
 
-    public Date getDateDebut() {
+    public OffsetDateTime getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(Date dateDebut) {
+    public void setDateDebut(OffsetDateTime dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public Date getDateFin() {
+    public OffsetDateTime getDateFin() {
         return dateFin;
     }
 
-    public void setDateFin(Date dateFin) {
+    public void setDateFin(OffsetDateTime dateFin) {
         this.dateFin = dateFin;
     }
 
