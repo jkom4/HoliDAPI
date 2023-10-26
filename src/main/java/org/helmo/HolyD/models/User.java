@@ -1,6 +1,10 @@
 package org.helmo.HolyD.models;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -17,21 +21,27 @@ public class User {
     @ManyToOne(optional = false)
     private Role role;
 
-    @Column(nullable = false)
+    @Size(min = 2, max = 30, message = "Wrong lastname size min=2 max=30")
+    @Column(length = 30, nullable = false)
     private String nom;
-    @Column(nullable = false)
+    @Size(min = 2, max = 30, message = "Wrong firstname size min=2 max=30")
+    @Column(length = 30, nullable = false)
     private String prenom;
-    @Column(nullable = false)
+    @Email
+    @Size(min = 2, max = 100, message = "Wrong email size min=2 max=100")
+    @Column(length = 100, unique = true, nullable = false)
     private String email;
-    @Column(nullable = false)
+    @Size(min = 2, max = 100, message = "Wrong password size min=2 max=100")
+    @Column(length = 100, nullable = false)
     private String passwd;
-    @Column(nullable = true)
+    @Size(max = 150, message = "Wrong token connection size max=150")
+    @Column(length = 150, nullable = true)
     private String tokenConnection;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     private Provider tokenProvider;
 
-    @ManyToMany
+    @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
     private Collection<Vacance> vacances;
 
     public Long getId() {

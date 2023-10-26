@@ -1,6 +1,7 @@
 package org.helmo.HolyD.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 import java.time.OffsetDateTime;
 import java.util.Collection;
@@ -14,18 +15,25 @@ public class Vacance {
     @SequenceGenerator(name = "id_Vacance", sequenceName = "ID_VACANCE", allocationSize = 1)
     private Long id;
 
+    @Size(min = 2, max = 50, message = "Wrong name size min=2 max=50")
+    @Column(length = 50, nullable = false)
+    private String nom;
+    @Size(min = 2, max = 250, message = "Wrong description size min=2 max=250")
+    @Column(length = 250, nullable = false)
+    private String description;
+
     @Column(nullable = false)
     private OffsetDateTime dateDebut;
     @Column(nullable = false)
     private OffsetDateTime dateFin;
 
-    @OneToMany
+    @OneToMany(mappedBy="vacance", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
     private Collection<Activite> activites;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade={CascadeType.PERSIST})
     private Lieu lieu;
 
-    @OneToMany
+    @OneToMany(mappedBy="vacance", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
     private Collection<Message> messages;
 
     public Long getId() {
@@ -34,6 +42,22 @@ public class Vacance {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public OffsetDateTime getDateDebut() {
@@ -93,6 +117,8 @@ public class Vacance {
     public String toString() {
         return "Vacance{" +
                 "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", description='" + description + '\'' +
                 ", dateDebut=" + dateDebut +
                 ", dateFin=" + dateFin +
                 ", activites=" + activites +

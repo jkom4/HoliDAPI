@@ -8,8 +8,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.helmo.HolyD.controlers.swagger.UserControlerSwagger;
 import org.helmo.HolyD.models.User;
 import org.helmo.HolyD.repository.UserRepository;
+import org.helmo.HolyD.repository.exception.UserAlreadyExistException;
 import org.helmo.HolyD.repository.exception.UserNotFoundException;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @CrossOrigin
 @RestController
@@ -25,15 +28,16 @@ public class UserControler implements UserControlerSwagger {
 
     @Override
     @PutMapping("/signup")
-    public User putUser(@RequestBody User user){
+    public User putUser(@Valid @RequestBody User user){
         if (repository.existsByEmail(user.getEmail())){
-            throw new UserNotFoundException();
+            throw new UserAlreadyExistException();
         }
         return repository.saveAndFlush(user);
     }
     @Override
     @PostMapping("/signin")
-    public User postUser(@RequestBody User user){
-        return repository.findByEmailAndPasswd(user.getEmail(), user.getPasswd());
+    public User postUser(@Valid @RequestBody User user){
+        return repository.findByEmailAndPasswd(user.getEmail(), user.getPasswd())
+                .orElseThrow(UserNotFoundException::new);
     }
 }

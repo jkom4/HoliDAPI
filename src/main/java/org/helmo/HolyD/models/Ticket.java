@@ -1,6 +1,7 @@
 package org.helmo.HolyD.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
@@ -11,9 +12,11 @@ public class Ticket {
     @SequenceGenerator(name = "id_Ticket", sequenceName = "ID_TICKET", allocationSize = 1)
     private Long id;
 
-    @Column(nullable = false)
+    @Size(min = 2, max = 150, message = "Wrong topic size min=2 max=150")
+    @Column(length = 150, nullable = false)
     private String sujet;
-    @Column(nullable = false)
+    @Size(min = 2, max = 700, message = "Wrong description size min=2 max=700")
+    @Column(length = 700, nullable = false)
     private String description;
 
     public Long getId() {

@@ -1,6 +1,7 @@
 package org.helmo.HolyD.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 import java.time.OffsetDateTime;
 import java.util.Collection;
@@ -14,9 +15,11 @@ public class Activite {
     @SequenceGenerator(name = "id_Activite", sequenceName = "ID_ACTIVITE", allocationSize = 1)
     private Long id;
 
-    @Column(nullable = false)
+    @Size(min = 2, max = 50, message = "Wrong name  size min=2 max=50")
+    @Column(length = 50, nullable = false)
     private String nom;
-    @Column(nullable = false)
+    @Size(min = 2, max = 50, message = "Wrong description size min=2 max=50")
+    @Column(length = 50, nullable = false)
     private String description;
     @Column(nullable = false)
     private OffsetDateTime dateDebut;
@@ -26,8 +29,11 @@ public class Activite {
     @ManyToMany
     private Collection<User> participants;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade={CascadeType.PERSIST})
     private Lieu lieu;
+
+    @ManyToOne(optional = false)
+    private Vacance vacance;
 
     public Long getId() {
         return id;

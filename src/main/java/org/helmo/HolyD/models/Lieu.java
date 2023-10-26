@@ -1,6 +1,9 @@
 package org.helmo.HolyD.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 import java.util.Objects;
 
@@ -12,19 +15,31 @@ public class Lieu {
     @SequenceGenerator(name = "id_Lieu", sequenceName = "ID_LIEU", allocationSize = 1)
     private Long id;
 
-    @Column(nullable = false)
-    private float longitude;
-    @Column(nullable = false)
-    private float latitude;
-    @Column(nullable = false)
+
+    @Min(value = -180, message = "Wrong longitude size min=-180")
+    @Max(value = 180, message = "Wrong longitude size max=180")
+    @Column(scale = 6, precision = 9, nullable = false)
+    private double longitude;
+    @Min(value = -90, message = "Wrong latitude size max=90")
+    @Max(value = 90, message = "Wrong latitude size max=90")
+    @Column(scale = 6, precision = 8, nullable = false)
+    private double latitude;
+    @Size(min = 2, max = 70, message = "Wrong latitude size min=2 max=70")
+    @Column(length = 70, nullable = false)
     private String rue;
-    @Column(nullable = false)
+    @Min(value = 0, message = "Wrong street number size min=0")
+    @Max(value = 999999999, message = "Wrong street number size max=999999999")
+    @Column(precision = 9, nullable = false)
     private int rueNumero;
-    @Column(nullable = false)
+    @Min(value = 0, message = "Wrong postal code size min=0")
+    @Max(value = 999999999, message = "Wrong postal code size max=999999999")
+    @Column(precision = 9, nullable = false)
     private int codePostal;
-    @Column(nullable = false)
+    @Size(min = 2, max = 50, message = "Wrong city size min=2 max=50")
+    @Column(length = 50, nullable = false)
     private String ville;
-    @Column(nullable = false)
+    @Size(min = 2, max = 50, message = "Wrong country size min=2 max=50")
+    @Column(length = 50, nullable = false)
     private String pays;
 
     public Long getId() {
@@ -35,7 +50,7 @@ public class Lieu {
         this.id = id;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
@@ -43,7 +58,7 @@ public class Lieu {
         this.longitude = longitude;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 

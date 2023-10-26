@@ -2,6 +2,7 @@ package org.helmo.HolyD.models;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
@@ -14,13 +15,18 @@ public class Message {
     @SequenceGenerator(name = "id_Message", sequenceName = "ID_MESSAGE", allocationSize = 1)
     private Long id;
 
-    @Column(nullable = false)
+    @Size(min = 1, max = 800, message = "Wrong content message size min=1 max=800")
+    @Column(length = 800, nullable = false)
     private String content;
+
     @Column(nullable = false)
     private OffsetDateTime sendingDate;
 
     @OneToOne(optional = false)
     private User user;
+
+    @ManyToOne(optional = false)
+    private Vacance vacance;
 
     public Long getId() {
         return id;
