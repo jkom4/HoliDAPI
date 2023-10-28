@@ -1,12 +1,7 @@
 package org.helmo.HolyD.controlers;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.helmo.HolyD.controlers.swagger.UserControlerSwagger;
-import org.helmo.HolyD.models.User;
+import org.helmo.HolyD.repository.DTO.UserDTO;
 import org.helmo.HolyD.repository.UserRepository;
 import org.helmo.HolyD.repository.exception.UserAlreadyExistException;
 import org.helmo.HolyD.repository.exception.UserNotFoundException;
@@ -28,7 +23,7 @@ public class UserControler implements UserControlerSwagger {
 
     @Override
     @PutMapping("/signup")
-    public User putUser(@Valid @RequestBody User user){
+    public UserDTO putUser(@Valid @RequestBody UserDTO user){
         if (repository.existsByEmail(user.getEmail())){
             throw new UserAlreadyExistException();
         }
@@ -36,7 +31,7 @@ public class UserControler implements UserControlerSwagger {
     }
     @Override
     @PostMapping("/signin")
-    public User postUser(@Valid @RequestBody User user){
+    public UserDTO postUser(@Valid @RequestBody UserDTO user){
         return repository.findByEmailAndPasswd(user.getEmail(), user.getPasswd())
                 .orElseThrow(UserNotFoundException::new);
     }

@@ -1,17 +1,19 @@
-package org.helmo.HolyD.models;
+package org.helmo.HolyD.repository.DTO;
+
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Provider {
+@Table(name = "PROVIDER")
+public class ProviderDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_Provider")
     @SequenceGenerator(name = "id_Provider", sequenceName = "ID_PROVIDER", allocationSize = 1)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(length = 35, nullable = false)
     private String nom;
 
     public Long getId() {
@@ -34,7 +36,7 @@ public class Provider {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Provider provider = (Provider) o;
+        ProviderDTO provider = (ProviderDTO) o;
         return id.equals(provider.id);
     }
 

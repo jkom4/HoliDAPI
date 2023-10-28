@@ -1,40 +1,23 @@
 package org.helmo.HolyD.models;
 
 
-import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.OffsetDateTime;
-import java.util.Objects;
 
 
-@Entity
 public class Message {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_Message")
-    @SequenceGenerator(name = "id_Message", sequenceName = "ID_MESSAGE", allocationSize = 1)
-    private Long id;
-
     @Size(min = 1, max = 800, message = "Wrong content message size min=1 max=800")
-    @Column(length = 800, nullable = false)
     private String content;
 
-    @Column(nullable = false)
+    @NotNull
     private OffsetDateTime sendingDate;
 
-    @OneToOne(optional = false)
+    @NotNull
     private User user;
 
-    @ManyToOne(optional = false)
     private Vacance vacance;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getContent() {
         return content;
@@ -60,24 +43,12 @@ public class Message {
         this.user = user;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Message message = (Message) o;
-        return id.equals(message.id);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 
     @Override
     public String toString() {
         return "Message{" +
-                "id=" + id +
-                ", content='" + content + '\'' +
+                "content='" + content + '\'' +
                 ", sendingDate=" + sendingDate +
                 ", user=" + user +
                 '}';

@@ -1,48 +1,28 @@
 package org.helmo.HolyD.models;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import java.time.OffsetDateTime;
 import java.util.Collection;
-import java.util.Objects;
 
-@Entity
 public class Vacance {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_Vacance")
-    @SequenceGenerator(name = "id_Vacance", sequenceName = "ID_VACANCE", allocationSize = 1)
-    private Long id;
-
     @Size(min = 2, max = 50, message = "Wrong name size min=2 max=50")
-    @Column(length = 50, nullable = false)
     private String nom;
     @Size(min = 2, max = 250, message = "Wrong description size min=2 max=250")
-    @Column(length = 250, nullable = false)
     private String description;
 
-    @Column(nullable = false)
+    @NotNull
     private OffsetDateTime dateDebut;
-    @Column(nullable = false)
+    @NotNull
     private OffsetDateTime dateFin;
 
-    @OneToMany(mappedBy="vacance", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
     private Collection<Activite> activites;
 
-    @ManyToOne(optional = false, cascade={CascadeType.PERSIST})
+    @NotNull
     private Lieu lieu;
 
-    @OneToMany(mappedBy="vacance", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
     private Collection<Message> messages;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNom() {
         return nom;
@@ -101,23 +81,9 @@ public class Vacance {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Vacance vacance = (Vacance) o;
-        return id.equals(vacance.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
     public String toString() {
         return "Vacance{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
+                "nom='" + nom + '\'' +
                 ", description='" + description + '\'' +
                 ", dateDebut=" + dateDebut +
                 ", dateFin=" + dateFin +

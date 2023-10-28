@@ -1,27 +1,48 @@
-package org.helmo.HolyD.models;
+package org.helmo.HolyD.repository.DTO;
 
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
+
 import java.time.OffsetDateTime;
 import java.util.Collection;
+import java.util.Objects;
 
-public class Activite {
+@Entity
+@Table(name = "ACTIVITE")
+public class ActiviteDTO {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_Activite")
+    @SequenceGenerator(name = "id_Activite", sequenceName = "ID_ACTIVITE", allocationSize = 1)
+    private Long id;
 
     @Size(min = 2, max = 50, message = "Wrong name  size min=2 max=50")
+    @Column(length = 50, nullable = false)
     private String nom;
     @Size(min = 2, max = 50, message = "Wrong description size min=2 max=50")
+    @Column(length = 50, nullable = false)
     private String description;
-
-    @NotNull
+    @Column(nullable = false)
     private OffsetDateTime dateDebut;
-    @NotNull
+    @Column(nullable = false)
     private OffsetDateTime dateFin;
 
-    private Collection<User> participants;
+    @ManyToMany
+    private Collection<UserDTO> participants;
 
-    @NotNull
-    private Lieu lieu;
+    @ManyToOne(optional = false, cascade={CascadeType.PERSIST})
+    private LieuDTO lieu;
 
+    @ManyToOne(optional = false)
+    private VacanceDTO vacance;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNom() {
         return nom;
@@ -55,27 +76,40 @@ public class Activite {
         this.dateFin = dateFin;
     }
 
-    public Lieu getLieu() {
+    public LieuDTO getLieu() {
         return lieu;
     }
 
-    public void setLieu(Lieu lieu) {
+    public void setLieu(LieuDTO lieu) {
         this.lieu = lieu;
     }
 
-    public Collection<User> getParticipants() {
+    public Collection<UserDTO> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(Collection<User> participants) {
+    public void setParticipants(Collection<UserDTO> participants) {
         this.participants = participants;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ActiviteDTO activite = (ActiviteDTO) o;
+        return id.equals(activite.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
     @Override
     public String toString() {
         return "Activite{" +
-                "nom='" + nom + '\'' +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
                 ", description='" + description + '\'' +
                 ", dateDebut=" + dateDebut +
                 ", dateFin=" + dateFin +

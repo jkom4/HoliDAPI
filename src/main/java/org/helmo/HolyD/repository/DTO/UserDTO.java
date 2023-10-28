@@ -1,37 +1,60 @@
-package org.helmo.HolyD.models;
+package org.helmo.HolyD.repository.DTO;
 
+import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 import java.util.Collection;
+import java.util.Objects;
 
-public class User {
+@Entity
+@Table(name = "UTILISATEUR")
+public class UserDTO {
 
-    @NotNull
-    private String role;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_User")
+    @SequenceGenerator(name = "id_User", sequenceName = "ID_USER", allocationSize = 1)
+    private Long id;
+
+    @ManyToOne(optional = false)
+    private RoleDTO role;
 
     @Size(min = 2, max = 30, message = "Wrong lastname size min=2 max=30")
+    @Column(length = 30, nullable = false)
     private String nom;
     @Size(min = 2, max = 30, message = "Wrong firstname size min=2 max=30")
+    @Column(length = 30, nullable = false)
     private String prenom;
     @Email
     @Size(min = 2, max = 100, message = "Wrong email size min=2 max=100")
+    @Column(length = 100, unique = true, nullable = false)
     private String email;
     @Size(min = 2, max = 100, message = "Wrong password size min=2 max=100")
+    @Column(length = 100, nullable = false)
     private String passwd;
-    @Size(max = 150, message = "Wrong token connection size max=150")
+    @Size(max = 250, message = "Wrong token connection size max=250")
+    @Column(length = 250, nullable = true)
     private String tokenConnection;
 
+    @ManyToOne(optional = true)
+    private ProviderDTO tokenProvider;
 
-    private String tokenProvider;
+    @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+    private Collection<VacanceDTO> vacances;
 
-    private Collection<Vacance> vacances;
+    public Long getId() {
+        return id;
+    }
 
-    public String getRole() {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public RoleDTO getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(RoleDTO role) {
         this.role = role;
     }
 
@@ -75,26 +98,41 @@ public class User {
         this.tokenConnection = tokenConnection;
     }
 
-    public String getTokenProvider() {
+    public ProviderDTO getTokenProvider() {
         return tokenProvider;
     }
 
-    public void setTokenProvider(String tokenProvider) {
+    public void setTokenProvider(ProviderDTO tokenProvider) {
         this.tokenProvider = tokenProvider;
     }
 
-    public Collection<Vacance> getVacances() {
+    public Collection<VacanceDTO> getVacances() {
         return vacances;
     }
 
-    public void setVacances(Collection<Vacance> vacances) {
+    public void setVacances(Collection<VacanceDTO> vacances) {
         this.vacances = vacances;
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDTO user = (UserDTO) o;
+        return id.equals(user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+
+    @Override
     public String toString() {
         return "User{" +
-                "role=" + role +
+                "id=" + id +
+                ", role=" + role +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", email='" + email + '\'' +
