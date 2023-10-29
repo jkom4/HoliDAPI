@@ -23,7 +23,8 @@ public class MessageDTO {
     @Column(nullable = false)
     private OffsetDateTime sendingDate;
 
-    @OneToOne(optional = false)
+    @OneToOne
+    @JoinColumn(nullable = false)
     private UserDTO sender;
 
     @ManyToOne(optional = false)

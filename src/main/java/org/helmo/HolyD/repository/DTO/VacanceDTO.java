@@ -29,6 +29,7 @@ public class VacanceDTO {
     private OffsetDateTime dateFin;
 
     @OneToOne
+    @JoinColumn(nullable = false)
     private UserDTO owner;
 
     @ManyToMany(mappedBy = "vacances")
