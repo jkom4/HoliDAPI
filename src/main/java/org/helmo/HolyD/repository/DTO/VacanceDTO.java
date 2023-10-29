@@ -28,6 +28,12 @@ public class VacanceDTO {
     @Column(nullable = false)
     private OffsetDateTime dateFin;
 
+    @OneToOne
+    private UserDTO owner;
+
+    @ManyToMany(mappedBy = "vacances")
+    private Collection<UserDTO> participants;
+
     @OneToMany(mappedBy = "vacance", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
     private Collection<ActiviteDTO> activites;
 
@@ -77,6 +83,22 @@ public class VacanceDTO {
         this.dateFin = dateFin;
     }
 
+    public UserDTO getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UserDTO owner) {
+        this.owner = owner;
+    }
+
+    public Collection<UserDTO> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(Collection<UserDTO> participants) {
+        this.participants = participants;
+    }
+
     public Collection<ActiviteDTO> getActivites() {
         return activites;
     }
@@ -105,8 +127,8 @@ public class VacanceDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        VacanceDTO vacance = (VacanceDTO) o;
-        return id.equals(vacance.id);
+        VacanceDTO that = (VacanceDTO) o;
+        return Objects.equals(id, that.id);
     }
 
     @Override
@@ -116,12 +138,14 @@ public class VacanceDTO {
 
     @Override
     public String toString() {
-        return "Vacance{" +
+        return "VacanceDTO{" +
                 "id=" + id +
                 ", nom='" + nom + '\'' +
                 ", description='" + description + '\'' +
                 ", dateDebut=" + dateDebut +
                 ", dateFin=" + dateFin +
+                ", owner=" + owner +
+                ", participants=" + participants +
                 ", activites=" + activites +
                 ", lieu=" + lieu +
                 ", messages=" + messages +

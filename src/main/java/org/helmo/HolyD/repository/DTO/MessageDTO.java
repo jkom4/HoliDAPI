@@ -24,7 +24,7 @@ public class MessageDTO {
     private OffsetDateTime sendingDate;
 
     @OneToOne(optional = false)
-    private UserDTO user;
+    private UserDTO sender;
 
     @ManyToOne(optional = false)
     private VacanceDTO vacance;
@@ -53,12 +53,12 @@ public class MessageDTO {
         this.sendingDate = sendingDate;
     }
 
-    public UserDTO getUser() {
-        return user;
+    public UserDTO getSender() {
+        return sender;
     }
 
-    public void setUser(UserDTO user) {
-        this.user = user;
+    public void setSender(UserDTO sender) {
+        this.sender = sender;
     }
 
     @Override
@@ -80,7 +80,7 @@ public class MessageDTO {
                 "id=" + id +
                 ", content='" + content + '\'' +
                 ", sendingDate=" + sendingDate +
-                ", user=" + user +
+                ", sender=" + sender +
                 '}';
     }
 }

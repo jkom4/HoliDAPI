@@ -1,27 +1,25 @@
-package org.helmo.HolyD.models;
+package org.helmo.HolyD.models.reponses;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.OffsetDateTime;
 import java.util.Collection;
 
 public class Activite {
 
-    @Size(min = 2, max = 50, message = "Wrong name  size min=2 max=50")
+    private Long id;
     private String nom;
-    @Size(min = 2, max = 50, message = "Wrong description size min=2 max=50")
     private String description;
-
-    @NotNull
     private OffsetDateTime dateDebut;
-    @NotNull
     private OffsetDateTime dateFin;
-
-    private Collection<User> participants;
-
-    @NotNull
+    private Collection<Participant> participants;
     private Lieu lieu;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNom() {
         return nom;
@@ -55,6 +53,14 @@ public class Activite {
         this.dateFin = dateFin;
     }
 
+    public Collection<Participant> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(Collection<Participant> participants) {
+        this.participants = participants;
+    }
+
     public Lieu getLieu() {
         return lieu;
     }
@@ -63,19 +69,11 @@ public class Activite {
         this.lieu = lieu;
     }
 
-    public Collection<User> getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(Collection<User> participants) {
-        this.participants = participants;
-    }
-
-
     @Override
     public String toString() {
         return "Activite{" +
-                "nom='" + nom + '\'' +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
                 ", description='" + description + '\'' +
                 ", dateDebut=" + dateDebut +
                 ", dateFin=" + dateFin +

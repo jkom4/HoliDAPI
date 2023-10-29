@@ -1,15 +1,15 @@
-package org.helmo.HolyD.models;
+package org.helmo.HolyD.models.SaveOldWithSize;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.OffsetDateTime;
 import java.util.Collection;
 
-public class Vacance {
+public class Activite {
 
-    @Size(min = 2, max = 50, message = "Wrong name size min=2 max=50")
+    @Size(min = 2, max = 50, message = "Wrong name  size min=2 max=50")
     private String nom;
-    @Size(min = 2, max = 250, message = "Wrong description size min=2 max=250")
+    @Size(min = 2, max = 50, message = "Wrong description size min=2 max=50")
     private String description;
 
     @NotNull
@@ -17,12 +17,11 @@ public class Vacance {
     @NotNull
     private OffsetDateTime dateFin;
 
-    private Collection<Activite> activites;
+    private Collection<User> participants;
 
     @NotNull
     private Lieu lieu;
 
-    private Collection<Message> messages;
 
     public String getNom() {
         return nom;
@@ -56,14 +55,6 @@ public class Vacance {
         this.dateFin = dateFin;
     }
 
-    public Collection<Activite> getActivites() {
-        return activites;
-    }
-
-    public void setActivites(Collection<Activite> activites) {
-        this.activites = activites;
-    }
-
     public Lieu getLieu() {
         return lieu;
     }
@@ -72,24 +63,24 @@ public class Vacance {
         this.lieu = lieu;
     }
 
-    public Collection<Message> getMessages() {
-        return messages;
+    public Collection<User> getParticipants() {
+        return participants;
     }
 
-    public void setMessages(Collection<Message> messages) {
-        this.messages = messages;
+    public void setParticipants(Collection<User> participants) {
+        this.participants = participants;
     }
+
 
     @Override
     public String toString() {
-        return "Vacance{" +
+        return "Activite{" +
                 "nom='" + nom + '\'' +
                 ", description='" + description + '\'' +
                 ", dateDebut=" + dateDebut +
                 ", dateFin=" + dateFin +
-                ", activites=" + activites +
+                ", participants=" + participants +
                 ", lieu=" + lieu +
-                ", messages=" + messages +
                 '}';
     }
 }

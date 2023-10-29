@@ -27,6 +27,9 @@ public class ActiviteDTO {
     @Column(nullable = false)
     private OffsetDateTime dateFin;
 
+    @OneToOne
+    private UserDTO owner;
+
     @ManyToMany
     private Collection<UserDTO> participants;
 

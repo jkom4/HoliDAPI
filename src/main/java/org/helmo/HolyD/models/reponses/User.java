@@ -1,30 +1,14 @@
-package org.helmo.HolyD.models;
+package org.helmo.HolyD.models.reponses;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Collection;
 
 public class User {
 
-    @NotNull
     private String role;
-
-    @Size(min = 2, max = 30, message = "Wrong lastname size min=2 max=30")
     private String nom;
-    @Size(min = 2, max = 30, message = "Wrong firstname size min=2 max=30")
     private String prenom;
-    @Email
-    @Size(min = 2, max = 100, message = "Wrong email size min=2 max=100")
     private String email;
-    @Size(min = 2, max = 100, message = "Wrong password size min=2 max=100")
-    private String passwd;
-    @Size(max = 150, message = "Wrong token connection size max=150")
-    private String tokenConnection;
-
-
-    private String tokenProvider;
-
+    private String tokenConnection; // diff de token provider
     private Collection<Vacance> vacances;
 
     public String getRole() {
@@ -59,28 +43,12 @@ public class User {
         this.email = email;
     }
 
-    public String getPasswd() {
-        return passwd;
-    }
-
-    public void setPasswd(String passwd) {
-        this.passwd = passwd;
-    }
-
     public String getTokenConnection() {
         return tokenConnection;
     }
 
     public void setTokenConnection(String tokenConnection) {
         this.tokenConnection = tokenConnection;
-    }
-
-    public String getTokenProvider() {
-        return tokenProvider;
-    }
-
-    public void setTokenProvider(String tokenProvider) {
-        this.tokenProvider = tokenProvider;
     }
 
     public Collection<Vacance> getVacances() {
@@ -94,13 +62,11 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "role=" + role +
+                "role='" + role + '\'' +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", email='" + email + '\'' +
-                ", passwd='" + passwd + '\'' +
                 ", tokenConnection='" + tokenConnection + '\'' +
-                ", tokenProvider=" + tokenProvider +
                 ", vacances=" + vacances +
                 '}';
     }
