@@ -10,6 +10,7 @@ public class Activite {
     private String description;
     private OffsetDateTime dateDebut;
     private OffsetDateTime dateFin;
+    private Participant owner;
     private Collection<Participant> participants;
     private Lieu lieu;
 
@@ -53,6 +54,14 @@ public class Activite {
         this.dateFin = dateFin;
     }
 
+    public Participant getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Participant owner) {
+        this.owner = owner;
+    }
+
     public Collection<Participant> getParticipants() {
         return participants;
     }
@@ -77,6 +86,7 @@ public class Activite {
                 ", description='" + description + '\'' +
                 ", dateDebut=" + dateDebut +
                 ", dateFin=" + dateFin +
+                ", owner=" + owner +
                 ", participants=" + participants +
                 ", lieu=" + lieu +
                 '}';
