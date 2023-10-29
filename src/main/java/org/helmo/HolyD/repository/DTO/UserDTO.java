@@ -58,6 +58,10 @@ public class UserDTO {
         this.role = role;
     }
 
+    public String getRoleName() {
+        return role.getNom();
+    }
+
     public String getNom() {
         return nom;
     }

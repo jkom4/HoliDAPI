@@ -8,7 +8,7 @@ public class User {
     private String nom;
     private String prenom;
     private String email;
-    private String tokenConnection; // diff de token provider
+    private String tokenConnectionAPI; // diff de token provider
     private Collection<Vacance> vacances;
 
     public String getRole() {
@@ -44,11 +44,11 @@ public class User {
     }
 
     public String getTokenConnection() {
-        return tokenConnection;
+        return tokenConnectionAPI;
     }
 
     public void setTokenConnection(String tokenConnection) {
-        this.tokenConnection = tokenConnection;
+        this.tokenConnectionAPI = tokenConnection;
     }
 
     public Collection<Vacance> getVacances() {
@@ -66,7 +66,7 @@ public class User {
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", email='" + email + '\'' +
-                ", tokenConnection='" + tokenConnection + '\'' +
+                ", tokenConnection='" + tokenConnectionAPI + '\'' +
                 ", vacances=" + vacances +
                 '}';
     }
