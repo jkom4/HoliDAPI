@@ -1,15 +1,16 @@
 package org.helmo.HolyD.controlers;
 
 import org.helmo.HolyD.controlers.swagger.UserControlerSwagger;
+import org.helmo.HolyD.models.reponses.User;
 import org.helmo.HolyD.models.requests.UserSignIn;
 import org.helmo.HolyD.models.requests.UserSignUp;
 import org.helmo.HolyD.repository.DTO.UserDTO;
+import org.helmo.HolyD.controlers.exception.UserAlreadyExistException;
+import org.helmo.HolyD.controlers.exception.UserNotFoundException;
 import org.helmo.HolyD.repository.UserRepository;
-import org.helmo.HolyD.repository.exception.UserAlreadyExistException;
-import org.helmo.HolyD.repository.exception.UserNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,18 +30,20 @@ public class UserControler implements UserControlerSwagger {
     }
 
     @Override
-    @PutMapping("/signup")
-    public ResponseEntity<UserDTO> putUser(@Valid @RequestBody UserSignUp user){
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE ,consumes = MediaType.APPLICATION_JSON_VALUE)
+    public User signUp(@Valid @RequestBody UserSignUp user){
         if (repository.existsByEmail(user.getEmail())){
             throw new UserAlreadyExistException();
         }
-
-        return new ResponseEntity<UserDTO>(repository.saveAndFlush(modelMapper.map(user, UserDTO.class)), HttpStatus.OK);
+        return modelMapper.map(repository.saveAndFlush(modelMapper.map(user, UserDTO.class)),User.class);
     }
     @Override
-    @PostMapping("/signin")
-    public UserDTO postUser(@Valid @RequestBody UserSignIn user){
-        return repository.findByEmailAndPasswd(user.getEmail(), user.getPasswd())
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping(value = "/signin", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+    public User signIn(@Valid @RequestBody UserSignIn user){
+        UserDTO userDTO = repository.findByEmailAndPasswd(user.getEmail(), user.getPasswd())
                 .orElseThrow(UserNotFoundException::new);
+        return modelMapper.map(userDTO, User.class);
     }
 }
