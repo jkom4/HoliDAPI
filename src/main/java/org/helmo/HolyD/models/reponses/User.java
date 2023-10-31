@@ -4,12 +4,21 @@ import java.util.Collection;
 
 public class User {
 
+    private Long id;
     private String role;
     private String nom;
     private String prenom;
     private String email;
     private String tokenConnectionAPI; // diff de token provider
     private Collection<Vacance> vacances;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getRole() {
         return role;
@@ -62,7 +71,8 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "role='" + role + '\'' +
+                "id=" + id +
+                ", role='" + role + '\'' +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", email='" + email + '\'' +

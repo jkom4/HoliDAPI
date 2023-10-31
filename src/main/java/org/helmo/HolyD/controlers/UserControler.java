@@ -11,6 +11,7 @@ import org.helmo.HolyD.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,6 +23,8 @@ public class UserControler implements UserControlerSwagger {
 
     private final ModelMapper modelMapper;
     private final UserRepository repository;
+
+    private final Argon2PasswordEncoder encoder = new Argon2PasswordEncoder();
 
 
     public UserControler(UserRepository repository, ModelMapper modelMapper) {
@@ -37,13 +40,16 @@ public class UserControler implements UserControlerSwagger {
         if (repository.existsByEmail(user.getEmail())){
             throw new UserAlreadyExistException();
         }
-
+        String hashedPassword = encoder.encode(user.getPasswd());
+        user.setPasswd(hashedPassword);
         return modelMapper.map(repository.saveAndFlush(modelMapper.map(user, UserDTO.class)),User.class);
     }
     @Override
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "/signin", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
     public User signIn(@Valid @RequestBody UserSignIn user){
+        String hashedPassword = encoder.encode(user.getPasswd());
+        user.setPasswd(hashedPassword);
         UserDTO userDTO = repository.findByEmailAndPasswd(user.getEmail(), user.getPasswd())
                 .orElseThrow(UserNotFoundException::new);
         return modelMapper.map(userDTO, User.class);
