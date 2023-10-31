@@ -1,9 +1,13 @@
 package org.helmo.HolyD.repository.DTO;
 
+import org.helmo.HolyD.repository.DTO.enums.ProviderType;
+import org.helmo.HolyD.repository.DTO.enums.RoleType;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -40,7 +44,7 @@ public class UserDTO {
     private ProviderDTO tokenProvider;
 
     @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
-    private Collection<VacanceDTO> vacances;
+    private Collection<VacanceDTO> vacances = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -56,6 +60,9 @@ public class UserDTO {
 
     public void setRole(RoleDTO role) {
         this.role = role;
+    }
+    public void setRoleWithRoleType(RoleType roleType) {
+        this.role = new RoleDTO(roleType);
     }
 
     public String getRoleName() {
@@ -104,6 +111,9 @@ public class UserDTO {
 
     public ProviderDTO getTokenProvider() {
         return tokenProvider;
+    }
+    public void setPoviderWithProviderType(ProviderType providerType) {
+        this.tokenProvider = new ProviderDTO(providerType);
     }
 
     public void setTokenProvider(ProviderDTO tokenProvider) {

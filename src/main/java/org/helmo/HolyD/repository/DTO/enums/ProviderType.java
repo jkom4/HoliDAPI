@@ -13,4 +13,8 @@ public enum ProviderType {
     public String toString() {
         return value;
     }
+
+    public int toInt(){
+        return this.ordinal() + 1;
+    }
 }

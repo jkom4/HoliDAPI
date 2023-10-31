@@ -21,14 +21,14 @@ public interface UserControlerSwagger {
     @Operation(operationId = "UserControler", summary = "Used to sign up a user.", description = "Return a user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)), description = "Successful"),
-            @ApiResponse(responseCode = "404", description = UserAlreadyExistException.MESSAGE_ERROR)
+            @ApiResponse(responseCode = UserAlreadyExistException.STATUCODE_ERROR, description = UserAlreadyExistException.MESSAGE_ERROR)
     })
     User signUp(@RequestBody UserSignUp user);
 
     @Operation(operationId = "UserControler", summary = "Used to sign in a user.", description = "Return a user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)), description = "Successful"),
-            @ApiResponse(responseCode = "404", description = UserNotFoundException.MESSAGE_ERROR)
+            @ApiResponse(responseCode = UserNotFoundException.STATUCODE_ERROR, description = UserNotFoundException.MESSAGE_ERROR)
     })
     User signIn(@RequestBody UserSignIn user);
 }

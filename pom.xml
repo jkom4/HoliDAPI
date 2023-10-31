@@ -32,7 +32,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
+			<version>2.1.214</version>
 		</dependency>
 
 		<dependency>
@@ -69,8 +69,6 @@
 			<artifactId>modelmapper</artifactId>
 			<version>3.2.0</version>
 		</dependency>
-		
-
 
 	</dependencies>
 

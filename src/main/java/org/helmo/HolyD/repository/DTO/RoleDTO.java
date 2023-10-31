@@ -1,6 +1,8 @@
 package org.helmo.HolyD.repository.DTO;
 
 
+import org.helmo.HolyD.repository.DTO.enums.RoleType;
+
 import javax.persistence.*;
 
 import java.util.Objects;
@@ -16,6 +18,13 @@ public class RoleDTO {
 
     @Column(length = 35, nullable = false)
     private String nom;
+
+    public RoleDTO() {
+    }
+    public RoleDTO(RoleType roleType) {
+        this.id = (long) roleType.toInt();
+        this.nom = roleType.toString();
+    }
 
     public Long getId() {
         return id;

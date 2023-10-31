@@ -31,11 +31,13 @@ public class UserControler implements UserControlerSwagger {
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE ,consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE , consumes = MediaType.APPLICATION_JSON_VALUE)
     public User signUp(@Valid @RequestBody UserSignUp user){
+        System.out.println(modelMapper.map(user, UserDTO.class));
         if (repository.existsByEmail(user.getEmail())){
             throw new UserAlreadyExistException();
         }
+
         return modelMapper.map(repository.saveAndFlush(modelMapper.map(user, UserDTO.class)),User.class);
     }
     @Override

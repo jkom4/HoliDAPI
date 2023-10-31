@@ -1,6 +1,9 @@
 package org.helmo.HolyD.repository.DTO;
 
 
+import org.helmo.HolyD.repository.DTO.enums.ProviderType;
+import org.helmo.HolyD.repository.DTO.enums.RoleType;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -15,6 +18,13 @@ public class ProviderDTO {
 
     @Column(length = 35, nullable = false)
     private String nom;
+
+    public ProviderDTO() {
+    }
+    public ProviderDTO(ProviderType providerType) {
+        this.id = (long) providerType.toInt();
+        this.nom = providerType.toString();
+    }
 
     public Long getId() {
         return id;

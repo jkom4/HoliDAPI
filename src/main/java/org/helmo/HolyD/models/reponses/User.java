@@ -43,12 +43,12 @@ public class User {
         this.email = email;
     }
 
-    public String getTokenConnection() {
+    public String getTokenConnectionAPI() {
         return tokenConnectionAPI;
     }
 
-    public void setTokenConnection(String tokenConnection) {
-        this.tokenConnectionAPI = tokenConnection;
+    public void setTokenConnectionAPI(String tokenConnectionAPI) {
+        this.tokenConnectionAPI = tokenConnectionAPI;
     }
 
     public Collection<Vacance> getVacances() {
@@ -66,7 +66,7 @@ public class User {
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", email='" + email + '\'' +
-                ", tokenConnection='" + tokenConnectionAPI + '\'' +
+                ", tokenConnectionAPI='" + tokenConnectionAPI + '\'' +
                 ", vacances=" + vacances +
                 '}';
     }

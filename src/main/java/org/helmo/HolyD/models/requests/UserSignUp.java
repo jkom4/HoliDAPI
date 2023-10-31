@@ -1,5 +1,7 @@
 package org.helmo.HolyD.models.requests;
 
+import org.helmo.HolyD.repository.DTO.enums.RoleType;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
@@ -45,6 +47,10 @@ public class UserSignUp {
 
     public void setPasswd(String passwd) {
         this.passwd = passwd;
+    }
+
+    public RoleType getDefaultRoleType(){
+        return RoleType.USER;
     }
 
     @Override

@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -33,16 +34,16 @@ public class VacanceDTO {
     private UserDTO owner;
 
     @ManyToMany(mappedBy = "vacances")
-    private Collection<UserDTO> participants;
+    private Collection<UserDTO> participants = new ArrayList<>();
 
     @OneToMany(mappedBy = "vacance", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
-    private Collection<ActiviteDTO> activites;
+    private Collection<ActiviteDTO> activites = new ArrayList<>();
 
     @ManyToOne(optional = false, cascade={CascadeType.PERSIST})
     private LieuDTO lieu;
 
     @OneToMany(mappedBy="vacance", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
-    private Collection<MessageDTO> messages;
+    private Collection<MessageDTO> messages = new ArrayList<>();
 
     public Long getId() {
         return id;
