@@ -24,7 +24,7 @@ public class UserControler implements UserControlerSwagger {
     private final ModelMapper modelMapper;
     private final UserRepository repository;
 
-    private final Argon2PasswordEncoder encoder = new Argon2PasswordEncoder();
+    private final Argon2PasswordEncoder encoder = new Argon2PasswordEncoder(16, 32, 1, 4096, 3);
 
 
     public UserControler(UserRepository repository, ModelMapper modelMapper) {
@@ -36,12 +36,12 @@ public class UserControler implements UserControlerSwagger {
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE , consumes = MediaType.APPLICATION_JSON_VALUE)
     public User signUp(@Valid @RequestBody UserSignUp user){
-        System.out.println(modelMapper.map(user, UserDTO.class));
         if (repository.existsByEmail(user.getEmail())){
             throw new UserAlreadyExistException();
         }
         String hashedPassword = encoder.encode(user.getPasswd());
         user.setPasswd(hashedPassword);
+        System.out.println(modelMapper.map(user, UserDTO.class));
         return modelMapper.map(repository.saveAndFlush(modelMapper.map(user, UserDTO.class)),User.class);
     }
     @Override
