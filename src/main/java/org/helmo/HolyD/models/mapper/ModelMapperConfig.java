@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class ModelMapperConfig {
     @Bean
     public ModelMapper modelMapper() {
-        ModelMapper modelMapper =new ModelMapper();
+        ModelMapper modelMapper = new ModelMapper();
         modelMapper.typeMap(UserDTO.class, User.class)
                 .addMapping(UserDTO::getRoleName, User::setRole);
         modelMapper.typeMap(UserSignUp.class, UserDTO.class)

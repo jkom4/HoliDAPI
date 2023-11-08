@@ -1,6 +1,5 @@
 package org.helmo.HolyD.repository.DTO;
 
-import org.helmo.HolyD.repository.DTO.enums.ProviderType;
 import org.helmo.HolyD.repository.DTO.enums.RoleType;
 
 import javax.persistence.*;
