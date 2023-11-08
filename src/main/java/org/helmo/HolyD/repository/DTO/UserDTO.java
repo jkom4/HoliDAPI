@@ -40,11 +40,22 @@ public class UserDTO {
     @Column(length = 250, nullable = true)
     private String tokenConnection;
 
-    @ManyToOne(optional = true)
-    private ProviderDTO tokenProvider;
-
     @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
     private Collection<VacanceDTO> vacances = new ArrayList<>();
+
+    public UserDTO() {
+    }
+
+    public UserDTO(Long id, RoleDTO role, String nom, String prenom, String email, String passwd, String tokenConnection, Collection<VacanceDTO> vacances) {
+        this.id = id;
+        this.role = role;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.passwd = passwd;
+        this.tokenConnection = tokenConnection;
+        this.vacances = vacances;
+    }
 
     public Long getId() {
         return id;
@@ -109,17 +120,6 @@ public class UserDTO {
         this.tokenConnection = tokenConnection;
     }
 
-    public ProviderDTO getTokenProvider() {
-        return tokenProvider;
-    }
-    public void setPoviderWithProviderType(ProviderType providerType) {
-        this.tokenProvider = new ProviderDTO(providerType);
-    }
-
-    public void setTokenProvider(ProviderDTO tokenProvider) {
-        this.tokenProvider = tokenProvider;
-    }
-
     public Collection<VacanceDTO> getVacances() {
         return vacances;
     }
@@ -152,7 +152,6 @@ public class UserDTO {
                 ", email='" + email + '\'' +
                 ", passwd='" + passwd + '\'' +
                 ", tokenConnection='" + tokenConnection + '\'' +
-                ", tokenProvider=" + tokenProvider +
                 ", vacances=" + vacances +
                 '}';
     }

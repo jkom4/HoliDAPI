@@ -1,4 +1,4 @@
-package org.helmo.HolyD.config;
+package org.helmo.HolyD.models.mapper;
 
 import org.helmo.HolyD.models.reponses.User;
 import org.helmo.HolyD.models.reponses.Vacance;

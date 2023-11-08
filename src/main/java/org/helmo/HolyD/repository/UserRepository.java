@@ -9,4 +9,6 @@ public interface UserRepository extends JpaRepository<UserDTO, Long> {
     Optional<UserDTO> findByEmailAndPasswd(String email, String passwd); //to SignIn
     boolean existsByEmail(String email); // to verifie if email already exist
 
+    Optional<UserDTO> findByEmail(String email);
+
 }
