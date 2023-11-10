@@ -1,7 +1,9 @@
 package org.helmo.HolyD.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -20,7 +22,7 @@ import java.util.List;
 public class SpringFoxConfig {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final String DEFAULT_INCLUDE_PATTERN = "/vacance/";
+    public static final String DEFAULT_INCLUDE_PATTERN = "/vacance/"; ///REST_AHME_VERD_WABO
 
     @Bean
     public Docket api() {
@@ -28,7 +30,7 @@ public class SpringFoxConfig {
                 .securityContexts(Collections.singletonList(securityContext()))
                 .securitySchemes(Collections.singletonList(apiKey()))
                 .apiInfo(apiInfo())
-                .tags(new Tag("user", "Sign service"),
+                .tags(new Tag("user", "Sign service & tools"),
                         new Tag("vacance", "Vacance service"))
                 .useDefaultResponseMessages(false)
                 .select()

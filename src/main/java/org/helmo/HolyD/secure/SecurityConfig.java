@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                     .antMatchers(HttpMethod.POST,"/user/signup").permitAll()
                     .antMatchers(HttpMethod.POST, "/user/signin").permitAll()
+                    .antMatchers(HttpMethod.POST, "/user/nbrUserAndNbrUserInHolidayByRange").permitAll()
                     .antMatchers(SWAGGER_LIST).permitAll()
                     .anyRequest().authenticated()
                 .and().sessionManagement(httpSecuritySessionManagementConfigurer ->

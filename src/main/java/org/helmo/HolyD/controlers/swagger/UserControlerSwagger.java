@@ -10,10 +10,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.helmo.HolyD.controlers.exception.UserAlreadyExistException;
 import org.helmo.HolyD.controlers.exception.UserNotFoundException;
+import org.helmo.HolyD.models.reponses.NbrUserAndNbrUserInHoliday;
 import org.helmo.HolyD.models.reponses.User;
+import org.helmo.HolyD.models.requests.NbrUserAndNbrUserInHolidayRequest;
 import org.helmo.HolyD.models.requests.UserSignIn;
 import org.helmo.HolyD.models.requests.UserSignUp;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import javax.validation.Valid;
 
 @Api(tags = "user")
 public interface UserControlerSwagger {
@@ -31,4 +35,10 @@ public interface UserControlerSwagger {
             @ApiResponse(responseCode = UserNotFoundException.STATUCODE_ERROR, description = UserNotFoundException.MESSAGE_ERROR)
     })
     User signIn(@RequestBody UserSignIn user);
+
+    @Operation(operationId = "UserControler", summary = "Used to get the number total of user and the number of user in holiday in a range of date.", description = "Return a NbrUserAndNbrUserInHoliday")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = NbrUserAndNbrUserInHoliday.class)), description = "Successful")
+    })
+    NbrUserAndNbrUserInHoliday nbrUserAndNbrUserInHolidayByRange(@Valid @RequestBody NbrUserAndNbrUserInHolidayRequest nbrUserAndNbrUserInHolidayRequest);
 }

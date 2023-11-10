@@ -24,6 +24,7 @@ public class VacanceService {
         UserDTO userConnected = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         VacanceDTO vacanceDTOToAdd = modelMapper.map(vacanceAdd, VacanceDTO.class);
         vacanceDTOToAdd.setOwner(userConnected);
+        vacanceDTOToAdd.addParticipant(userConnected);
         VacanceDTO vacanceDTOSaved = vacanceRepository.saveAndFlush(vacanceDTOToAdd);
         return modelMapper.map(vacanceDTOSaved, Vacance.class);
     }

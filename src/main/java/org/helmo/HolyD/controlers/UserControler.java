@@ -1,7 +1,9 @@
 package org.helmo.HolyD.controlers;
 
 import org.helmo.HolyD.controlers.swagger.UserControlerSwagger;
+import org.helmo.HolyD.models.reponses.NbrUserAndNbrUserInHoliday;
 import org.helmo.HolyD.models.reponses.User;
+import org.helmo.HolyD.models.requests.NbrUserAndNbrUserInHolidayRequest;
 import org.helmo.HolyD.models.requests.UserSignIn;
 import org.helmo.HolyD.models.requests.UserSignUp;
 import org.helmo.HolyD.services.UserService;
@@ -34,4 +36,12 @@ public class UserControler implements UserControlerSwagger {
     public User signIn(@Valid @RequestBody UserSignIn user){
         return userService.signIn(user);
     }
+
+    @Override
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping(value = "/nbrUserAndNbrUserInHolidayByRange")
+    public NbrUserAndNbrUserInHoliday nbrUserAndNbrUserInHolidayByRange(@Valid @RequestBody NbrUserAndNbrUserInHolidayRequest nbrUserAndNbrUserInHolidayRequest){
+        return new NbrUserAndNbrUserInHoliday(userService.getNbrOfUser(), userService.getNbrOfUserInHolidayByRange(nbrUserAndNbrUserInHolidayRequest.getDateDebut(), nbrUserAndNbrUserInHolidayRequest.getDateFin()));
+    }
+
 }

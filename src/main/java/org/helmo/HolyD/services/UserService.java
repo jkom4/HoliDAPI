@@ -5,7 +5,9 @@ import org.helmo.HolyD.controlers.exception.UserNotFoundException;
 import org.helmo.HolyD.models.reponses.User;
 import org.helmo.HolyD.models.requests.UserSignIn;
 import org.helmo.HolyD.models.requests.UserSignUp;
+import org.helmo.HolyD.repository.DTO.RoleDTO;
 import org.helmo.HolyD.repository.DTO.UserDTO;
+import org.helmo.HolyD.repository.DTO.enums.RoleType;
 import org.helmo.HolyD.repository.UserRepository;
 import org.helmo.HolyD.secure.jwt.JwtService;
 import org.modelmapper.ModelMapper;
@@ -14,6 +16,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.OffsetDateTime;
 
 @Service
 public class UserService {
@@ -57,5 +61,12 @@ public class UserService {
                 throw new UserNotFoundException();
         }
         return userResponse;
+    }
+
+    public int getNbrOfUser(){
+        return userRepository.countDistinctByRoleIs(new RoleDTO(RoleType.USER));
+    }
+    public int getNbrOfUserInHolidayByRange(OffsetDateTime dateDebutRange, OffsetDateTime dateFinRange){
+        return userRepository.countNbrOfUserInHolidayForRange(dateDebutRange, dateFinRange);
     }
 }
