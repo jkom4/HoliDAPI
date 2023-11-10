@@ -37,9 +37,10 @@ public class VacanceService {
     }
 
     public Vacance addParticipant(ParticipantAdd participantAdd){
+        UserDTO userConnected = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDTO userDTO = userRepository.findByEmail(participantAdd.getEmail())
                 .orElseThrow(UserNotFoundException::new);
-        VacanceDTO vacanceDTO = vacanceRepository.findByIdAndParticipantsContains(participantAdd.getId(), userDTO)
+        VacanceDTO vacanceDTO = vacanceRepository.findByIdAndParticipantsContains(participantAdd.getId(), userConnected)
                 .orElseThrow(VacanceNotFoundException::new);
         if(!vacanceDTO.addParticipant(userDTO)){
             throw new  UserAlreadyInsideException();
