@@ -1,6 +1,7 @@
 package org.helmo.HolyD.controlers.advice;
 
 import org.helmo.HolyD.controlers.exception.UserAlreadyExistException;
+import org.helmo.HolyD.controlers.exception.UserAlreadyInsideException;
 import org.helmo.HolyD.controlers.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,7 +16,7 @@ public class UserExceptionHandler {
     @ResponseBody
     @ExceptionHandler(UserAlreadyExistException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    Error userNotFoundHandler(UserAlreadyExistException ex) {
+    Error userAlreadyExistHandler(UserAlreadyExistException ex) {
         return ex.getERROR();
     }
 
@@ -23,6 +24,13 @@ public class UserExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     Error userNotFoundHandler(UserNotFoundException ex) {
+        return ex.getERROR();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(UserAlreadyInsideException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Error userAlreadyInsideHandler(UserAlreadyInsideException ex) {
         return ex.getERROR();
     }
 }

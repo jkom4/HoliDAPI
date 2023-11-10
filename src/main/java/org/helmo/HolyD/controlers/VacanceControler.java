@@ -2,6 +2,7 @@ package org.helmo.HolyD.controlers;
 
 import org.helmo.HolyD.controlers.swagger.VacanceControlerSwagger;
 import org.helmo.HolyD.models.reponses.Vacance;
+import org.helmo.HolyD.models.requests.ParticipantAdd;
 import org.helmo.HolyD.models.requests.VacanceAdd;
 import org.helmo.HolyD.services.VacanceService;
 import org.springframework.http.HttpStatus;
@@ -30,5 +31,12 @@ public class VacanceControler implements VacanceControlerSwagger {
     @PutMapping(value = "/add")
     public Vacance addVacance(@Valid @RequestBody VacanceAdd vacanceAdd) {
         return vacanceService.add(vacanceAdd);
+    }
+
+    @Override
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping(value = "/addParticipant")
+    public Vacance addParticipant(@Valid @RequestBody ParticipantAdd participantAdd) {
+        return vacanceService.addParticipant(participantAdd);
     }
 }

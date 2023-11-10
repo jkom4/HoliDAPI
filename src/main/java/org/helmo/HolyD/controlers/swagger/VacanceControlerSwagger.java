@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.helmo.HolyD.models.reponses.Vacance;
+import org.helmo.HolyD.models.requests.ParticipantAdd;
 import org.helmo.HolyD.models.requests.VacanceAdd;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,4 +21,11 @@ public interface VacanceControlerSwagger {
             @ApiResponse(responseCode = "400", description = "Fail to save")
     })
     Vacance addVacance(@RequestBody VacanceAdd vacanceAdd);
+
+    @Operation(operationId = "VacanceControler", summary = "Add participant to a vacance.", description = "Return Successful or error")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Vacance.class)), description = "Successful"),
+            @ApiResponse(responseCode = "400", description = "Fail to save")
+    })
+    Vacance addParticipant(@RequestBody ParticipantAdd participantAdd);
 }

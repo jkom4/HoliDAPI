@@ -100,8 +100,13 @@ public class VacanceDTO {
     public void setParticipants(Collection<UserDTO> participants) {
         this.participants = participants;
     }
-    public void addParticipant(UserDTO userDTO){
-        this.participants.add(userDTO);
+    public boolean addParticipant(UserDTO userDTO){
+        if(!this.participants.contains(userDTO)) {
+            this.participants.add(userDTO);
+            return true;
+        } else {
+            return false;
+        }
     }
     public Collection<ActiviteDTO> getActivites() {
         return activites;
