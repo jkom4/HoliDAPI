@@ -55,7 +55,8 @@ public class UserService {
             );
             if(authentication.isAuthenticated()){
                 String token = jwtService.generate(user.getEmail());
-                userResponse = modelMapper.map(userRepository.findByEmail(user.getEmail()), User.class);
+                UserDTO userConnected = (UserDTO) authentication.getPrincipal();
+                userResponse = modelMapper.map(userConnected, User.class);
                 userResponse.setTokenConnectionAPI(token);
             }}catch (Exception ex){
                 throw new UserNotFoundException();
