@@ -27,14 +27,14 @@ public class ActiviteDTO {
     @Column(nullable = false)
     private OffsetDateTime dateFin;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(nullable = false)
     private UserDTO owner;
 
     @ManyToMany
     private Collection<UserDTO> participants;
 
-    @ManyToOne(optional = false, cascade={CascadeType.PERSIST})
+    @ManyToOne(optional = false, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
     private LieuDTO lieu;
 
     @ManyToOne(optional = false)
@@ -80,12 +80,12 @@ public class ActiviteDTO {
         this.dateFin = dateFin;
     }
 
-    public LieuDTO getLieu() {
-        return lieu;
+    public UserDTO getOwner() {
+        return owner;
     }
 
-    public void setLieu(LieuDTO lieu) {
-        this.lieu = lieu;
+    public void setOwner(UserDTO owner) {
+        this.owner = owner;
     }
 
     public Collection<UserDTO> getParticipants() {
@@ -94,6 +94,22 @@ public class ActiviteDTO {
 
     public void setParticipants(Collection<UserDTO> participants) {
         this.participants = participants;
+    }
+
+    public LieuDTO getLieu() {
+        return lieu;
+    }
+
+    public void setLieu(LieuDTO lieu) {
+        this.lieu = lieu;
+    }
+
+    public VacanceDTO getVacance() {
+        return vacance;
+    }
+
+    public void setVacance(VacanceDTO vacance) {
+        this.vacance = vacance;
     }
 
     @Override
@@ -111,14 +127,16 @@ public class ActiviteDTO {
 
     @Override
     public String toString() {
-        return "Activite{" +
+        return "ActiviteDTO{" +
                 "id=" + id +
                 ", nom='" + nom + '\'' +
                 ", description='" + description + '\'' +
                 ", dateDebut=" + dateDebut +
                 ", dateFin=" + dateFin +
+                ", owner=" + owner +
                 ", participants=" + participants +
                 ", lieu=" + lieu +
+                ", vacance=" + vacance +
                 '}';
     }
 }

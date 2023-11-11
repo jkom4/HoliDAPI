@@ -29,17 +29,17 @@ public class VacanceDTO {
     @Column(nullable = false)
     private OffsetDateTime dateFin;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(nullable = false)
     private UserDTO owner;
 
-    @ManyToMany(mappedBy = "vacances")
+    @ManyToMany
     private Collection<UserDTO> participants = new ArrayList<>();
 
     @OneToMany(mappedBy = "vacance", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
     private Collection<ActiviteDTO> activites = new ArrayList<>();
 
-    @ManyToOne(optional = false, cascade={CascadeType.PERSIST})
+    @ManyToOne(optional = false, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
     private LieuDTO lieu;
 
     @OneToMany(mappedBy="vacance", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)

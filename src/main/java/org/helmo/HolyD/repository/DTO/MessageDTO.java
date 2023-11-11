@@ -23,7 +23,7 @@ public class MessageDTO {
     @Column(nullable = false)
     private OffsetDateTime sendingDate;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(nullable = false)
     private UserDTO sender;
 
@@ -62,6 +62,14 @@ public class MessageDTO {
         this.sender = sender;
     }
 
+    public VacanceDTO getVacance() {
+        return vacance;
+    }
+
+    public void setVacance(VacanceDTO vacance) {
+        this.vacance = vacance;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,11 +85,12 @@ public class MessageDTO {
 
     @Override
     public String toString() {
-        return "Message{" +
+        return "MessageDTO{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
                 ", sendingDate=" + sendingDate +
                 ", sender=" + sender +
+                ", vacance=" + vacance +
                 '}';
     }
 }

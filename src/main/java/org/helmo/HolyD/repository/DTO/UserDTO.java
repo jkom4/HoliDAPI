@@ -39,13 +39,22 @@ public class UserDTO {
     @Column(length = 250, nullable = true)
     private String tokenConnection;
 
-    @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "owner", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
+    private Collection<VacanceDTO> ownedVacances = new ArrayList<>();
+
+    @OneToMany(mappedBy = "owner", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
+    private Collection<ActiviteDTO> ownedActivites = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "participants")
     private Collection<VacanceDTO> vacances = new ArrayList<>();
+
+    @OneToMany(mappedBy = "sender", cascade={CascadeType.REMOVE}, orphanRemoval=true)
+    private Collection<MessageDTO> sendedMessages = new ArrayList<>();
 
     public UserDTO() {
     }
 
-    public UserDTO(Long id, RoleDTO role, String nom, String prenom, String email, String passwd, String tokenConnection, Collection<VacanceDTO> vacances) {
+    public UserDTO(Long id, RoleDTO role, String nom, String prenom, String email, String passwd, String tokenConnection, Collection<VacanceDTO> ownedVacances, Collection<ActiviteDTO> ownedActivites, Collection<VacanceDTO> vacances, Collection<MessageDTO> sendedMessages) {
         this.id = id;
         this.role = role;
         this.nom = nom;
@@ -53,7 +62,10 @@ public class UserDTO {
         this.email = email;
         this.passwd = passwd;
         this.tokenConnection = tokenConnection;
+        this.ownedVacances = ownedVacances;
+        this.ownedActivites = ownedActivites;
         this.vacances = vacances;
+        this.sendedMessages = sendedMessages;
     }
 
     public Long getId() {
@@ -74,7 +86,6 @@ public class UserDTO {
     public void setRoleWithRoleType(RoleType roleType) {
         this.role = new RoleDTO(roleType);
     }
-
     public String getRoleName() {
         return role.getNom();
     }
@@ -119,12 +130,36 @@ public class UserDTO {
         this.tokenConnection = tokenConnection;
     }
 
+    public Collection<VacanceDTO> getOwnedVacances() {
+        return ownedVacances;
+    }
+
+    public void setOwnedVacances(Collection<VacanceDTO> ownedVacances) {
+        this.ownedVacances = ownedVacances;
+    }
+
+    public Collection<ActiviteDTO> getOwnedActivites() {
+        return ownedActivites;
+    }
+
+    public void setOwnedActivites(Collection<ActiviteDTO> ownedActivites) {
+        this.ownedActivites = ownedActivites;
+    }
+
     public Collection<VacanceDTO> getVacances() {
         return vacances;
     }
 
     public void setVacances(Collection<VacanceDTO> vacances) {
         this.vacances = vacances;
+    }
+
+    public Collection<MessageDTO> getSendedMessages() {
+        return sendedMessages;
+    }
+
+    public void setSendedMessages(Collection<MessageDTO> sendedMessages) {
+        this.sendedMessages = sendedMessages;
     }
 
     @Override
@@ -140,10 +175,9 @@ public class UserDTO {
         return Objects.hash(id);
     }
 
-
     @Override
     public String toString() {
-        return "User{" +
+        return "UserDTO{" +
                 "id=" + id +
                 ", role=" + role +
                 ", nom='" + nom + '\'' +
@@ -151,7 +185,10 @@ public class UserDTO {
                 ", email='" + email + '\'' +
                 ", passwd='" + passwd + '\'' +
                 ", tokenConnection='" + tokenConnection + '\'' +
+                ", ownedVacances=" + ownedVacances +
+                ", ownedActivites=" + ownedActivites +
                 ", vacances=" + vacances +
+                ", sendedMessages=" + sendedMessages +
                 '}';
     }
 }
