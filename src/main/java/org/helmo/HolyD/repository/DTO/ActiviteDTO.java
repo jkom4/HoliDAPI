@@ -4,7 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 import java.time.OffsetDateTime;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 @Entity
@@ -32,7 +33,7 @@ public class ActiviteDTO {
     private UserDTO owner;
 
     @ManyToMany
-    private Collection<UserDTO> participants;
+    private Set<UserDTO> participants = new HashSet<>();
 
     @ManyToOne(optional = false, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
     private LieuDTO lieu;
@@ -88,11 +89,11 @@ public class ActiviteDTO {
         this.owner = owner;
     }
 
-    public Collection<UserDTO> getParticipants() {
+    public Set<UserDTO> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(Collection<UserDTO> participants) {
+    public void setParticipants(Set<UserDTO> participants) {
         this.participants = participants;
     }
 

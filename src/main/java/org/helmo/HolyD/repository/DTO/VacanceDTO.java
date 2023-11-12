@@ -4,8 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 @Entity
@@ -34,16 +34,16 @@ public class VacanceDTO {
     private UserDTO owner;
 
     @ManyToMany
-    private Collection<UserDTO> participants = new ArrayList<>();
+    private Set<UserDTO> participants = new HashSet<>();
 
     @OneToMany(mappedBy = "vacance", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
-    private Collection<ActiviteDTO> activites = new ArrayList<>();
+    private Set<ActiviteDTO> activites = new HashSet<>();
 
     @ManyToOne(optional = false, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
     private LieuDTO lieu;
 
     @OneToMany(mappedBy="vacance", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
-    private Collection<MessageDTO> messages = new ArrayList<>();
+    private Set<MessageDTO> messages = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -93,11 +93,11 @@ public class VacanceDTO {
         this.owner = owner;
     }
 
-    public Collection<UserDTO> getParticipants() {
+    public Set<UserDTO> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(Collection<UserDTO> participants) {
+    public void setParticipants(Set<UserDTO> participants) {
         this.participants = participants;
     }
     public boolean addParticipant(UserDTO userDTO){
@@ -108,11 +108,11 @@ public class VacanceDTO {
             return false;
         }
     }
-    public Collection<ActiviteDTO> getActivites() {
+    public Set<ActiviteDTO> getActivites() {
         return activites;
     }
 
-    public void setActivites(Collection<ActiviteDTO> activites) {
+    public void setActivites(Set<ActiviteDTO> activites) {
         this.activites = activites;
     }
 
@@ -124,11 +124,11 @@ public class VacanceDTO {
         this.lieu = lieu;
     }
 
-    public Collection<MessageDTO> getMessages() {
+    public Set<MessageDTO> getMessages() {
         return messages;
     }
 
-    public void setMessages(Collection<MessageDTO> messages) {
+    public void setMessages(Set<MessageDTO> messages) {
         this.messages = messages;
     }
 

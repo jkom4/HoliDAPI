@@ -6,9 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "UTILISATEUR")
@@ -40,21 +38,21 @@ public class UserDTO {
     private String tokenConnection;
 
     @OneToMany(mappedBy = "owner", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
-    private Collection<VacanceDTO> ownedVacances = new ArrayList<>();
+    private Set<VacanceDTO> ownedVacances = new HashSet<>();
 
     @OneToMany(mappedBy = "owner", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
-    private Collection<ActiviteDTO> ownedActivites = new ArrayList<>();
+    private Set<ActiviteDTO> ownedActivites = new HashSet<>();
 
     @ManyToMany(mappedBy = "participants")
-    private Collection<VacanceDTO> vacances = new ArrayList<>();
+    private Set<VacanceDTO> vacances = new HashSet<>();
 
     @OneToMany(mappedBy = "sender", cascade={CascadeType.REMOVE}, orphanRemoval=true)
-    private Collection<MessageDTO> sendedMessages = new ArrayList<>();
+    private Set<MessageDTO> sendedMessages = new HashSet<>();
 
     public UserDTO() {
     }
 
-    public UserDTO(Long id, RoleDTO role, String nom, String prenom, String email, String passwd, String tokenConnection, Collection<VacanceDTO> ownedVacances, Collection<ActiviteDTO> ownedActivites, Collection<VacanceDTO> vacances, Collection<MessageDTO> sendedMessages) {
+    public UserDTO(Long id, RoleDTO role, String nom, String prenom, String email, String passwd, String tokenConnection, Set<VacanceDTO> ownedVacances, Set<ActiviteDTO> ownedActivites, Set<VacanceDTO> vacances, Set<MessageDTO> sendedMessages) {
         this.id = id;
         this.role = role;
         this.nom = nom;
@@ -130,35 +128,53 @@ public class UserDTO {
         this.tokenConnection = tokenConnection;
     }
 
-    public Collection<VacanceDTO> getOwnedVacances() {
+    public Set<VacanceDTO> getOwnedVacances() {
         return ownedVacances;
     }
 
-    public void setOwnedVacances(Collection<VacanceDTO> ownedVacances) {
+    public void setOwnedVacances(Set<VacanceDTO> ownedVacances) {
         this.ownedVacances = ownedVacances;
     }
 
-    public Collection<ActiviteDTO> getOwnedActivites() {
+    public boolean addOwnedVacanceAndParticipation(VacanceDTO vacanceDTO){
+        if(!this.vacances.contains(vacanceDTO) && !this.ownedVacances.contains(vacanceDTO)) {
+            this.vacances.add(vacanceDTO);
+            this.ownedVacances.add(vacanceDTO);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Set<ActiviteDTO> getOwnedActivites() {
         return ownedActivites;
     }
 
-    public void setOwnedActivites(Collection<ActiviteDTO> ownedActivites) {
+    public void setOwnedActivites(Set<ActiviteDTO> ownedActivites) {
         this.ownedActivites = ownedActivites;
     }
 
-    public Collection<VacanceDTO> getVacances() {
+    public Set<VacanceDTO> getVacances() {
         return vacances;
     }
 
-    public void setVacances(Collection<VacanceDTO> vacances) {
+    public void setVacances(Set<VacanceDTO> vacances) {
         this.vacances = vacances;
     }
+    public boolean addParticipantionVacance(VacanceDTO vacanceDTO){
+        if(!this.vacances.contains(vacanceDTO)) {
+            this.vacances.add(vacanceDTO);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-    public Collection<MessageDTO> getSendedMessages() {
+    public Set<MessageDTO> getSendedMessages() {
         return sendedMessages;
     }
 
-    public void setSendedMessages(Collection<MessageDTO> sendedMessages) {
+    public void setSendedMessages(Set<MessageDTO> sendedMessages) {
         this.sendedMessages = sendedMessages;
     }
 
@@ -166,8 +182,8 @@ public class UserDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserDTO user = (UserDTO) o;
-        return id.equals(user.id);
+        UserDTO userDTO = (UserDTO) o;
+        return Objects.equals(id, userDTO.id);
     }
 
     @Override
