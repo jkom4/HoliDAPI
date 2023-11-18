@@ -33,9 +33,6 @@ public class UserDTO {
     @Size(min = 2, max = 100, message = "Wrong password size min=2 max=100")
     @Column(length = 100, nullable = false)
     private String passwd;
-    @Size(max = 250, message = "Wrong token connection size max=250")
-    @Column(length = 250, nullable = true)
-    private String tokenConnection;
 
     @OneToMany(mappedBy = "owner", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
     private Set<VacanceDTO> ownedVacances = new HashSet<>();
@@ -52,14 +49,13 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(Long id, RoleDTO role, String nom, String prenom, String email, String passwd, String tokenConnection, Set<VacanceDTO> ownedVacances, Set<ActiviteDTO> ownedActivites, Set<VacanceDTO> vacances, Set<MessageDTO> sendedMessages) {
+    public UserDTO(Long id, RoleDTO role, String nom, String prenom, String email, String passwd, Set<VacanceDTO> ownedVacances, Set<ActiviteDTO> ownedActivites, Set<VacanceDTO> vacances, Set<MessageDTO> sendedMessages) {
         this.id = id;
         this.role = role;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.passwd = passwd;
-        this.tokenConnection = tokenConnection;
         this.ownedVacances = ownedVacances;
         this.ownedActivites = ownedActivites;
         this.vacances = vacances;
@@ -118,14 +114,6 @@ public class UserDTO {
 
     public void setPasswd(String passwd) {
         this.passwd = passwd;
-    }
-
-    public String getTokenConnection() {
-        return tokenConnection;
-    }
-
-    public void setTokenConnection(String tokenConnection) {
-        this.tokenConnection = tokenConnection;
     }
 
     public Set<VacanceDTO> getOwnedVacances() {
@@ -200,7 +188,6 @@ public class UserDTO {
                 ", prenom='" + prenom + '\'' +
                 ", email='" + email + '\'' +
                 ", passwd='" + passwd + '\'' +
-                ", tokenConnection='" + tokenConnection + '\'' +
                 ", ownedVacances=" + ownedVacances +
                 ", ownedActivites=" + ownedActivites +
                 ", vacances=" + vacances +

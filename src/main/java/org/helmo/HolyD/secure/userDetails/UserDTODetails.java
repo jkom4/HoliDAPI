@@ -14,7 +14,7 @@ public class UserDTODetails extends UserDTO implements UserDetails  {
 
 
     public UserDTODetails(UserDTO userDTO) {
-        super(userDTO.getId(), userDTO.getRole(), userDTO.getNom(), userDTO.getPrenom(), userDTO.getEmail(), userDTO.getPasswd(), userDTO.getTokenConnection(), userDTO.getOwnedVacances(), userDTO.getOwnedActivites(), userDTO.getVacances(), userDTO.getSendedMessages());
+        super(userDTO.getId(), userDTO.getRole(), userDTO.getNom(), userDTO.getPrenom(), userDTO.getEmail(), userDTO.getPasswd(), userDTO.getOwnedVacances(), userDTO.getOwnedActivites(), userDTO.getVacances(), userDTO.getSendedMessages());
     }
 
 

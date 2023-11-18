@@ -5,6 +5,7 @@ import org.helmo.HolyD.models.reponses.NbrUserAndNbrUserInHoliday;
 import org.helmo.HolyD.models.reponses.User;
 import org.helmo.HolyD.models.requests.NbrUserAndNbrUserInHolidayRequest;
 import org.helmo.HolyD.models.requests.UserSignIn;
+import org.helmo.HolyD.models.requests.UserSignInWithProvider;
 import org.helmo.HolyD.models.requests.UserSignUp;
 import org.helmo.HolyD.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,13 @@ public class UserControler implements UserControlerSwagger {
     @PostMapping(value = "/signin")
     public User signIn(@Valid @RequestBody UserSignIn user){
         return userService.signIn(user);
+    }
+
+    @Override
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping(value = "/signinWithProvider")
+    public User signInWithProvider(@Valid @RequestBody UserSignInWithProvider user){
+        return userService.signInWithProvider(user);
     }
 
     @Override

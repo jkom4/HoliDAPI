@@ -14,6 +14,7 @@ import org.helmo.HolyD.models.reponses.NbrUserAndNbrUserInHoliday;
 import org.helmo.HolyD.models.reponses.User;
 import org.helmo.HolyD.models.requests.NbrUserAndNbrUserInHolidayRequest;
 import org.helmo.HolyD.models.requests.UserSignIn;
+import org.helmo.HolyD.models.requests.UserSignInWithProvider;
 import org.helmo.HolyD.models.requests.UserSignUp;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -35,6 +36,13 @@ public interface UserControlerSwagger {
             @ApiResponse(responseCode = UserNotFoundException.STATUCODE_ERROR, description = UserNotFoundException.MESSAGE_ERROR)
     })
     User signIn(@RequestBody UserSignIn user);
+
+    @Operation(operationId = "UserControler", summary = "Used to sign in a user with a provider.", description = "Return a user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)), description = "Successful"),
+            @ApiResponse(responseCode = UserNotFoundException.STATUCODE_ERROR, description = UserNotFoundException.MESSAGE_ERROR)
+    })
+    User signInWithProvider(@RequestBody UserSignInWithProvider user);
 
     @Operation(operationId = "UserControler", summary = "Used to get the number total of user and the number of user in holiday in a range of date.", description = "Return a NbrUserAndNbrUserInHoliday")
     @ApiResponses(value = {

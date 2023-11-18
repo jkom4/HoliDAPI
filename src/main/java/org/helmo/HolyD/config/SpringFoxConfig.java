@@ -22,7 +22,7 @@ import java.util.List;
 public class SpringFoxConfig {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final String DEFAULT_INCLUDE_PATTERN = "/vacance/"; ///REST_AHME_VERD_WABO
+    public static final String[] DEFAULT_INCLUDE_PATTERN = {"/vacance/", "/REST_AHME_VERD_WABO/vacance/"};
 
     @Bean
     public Docket api() {
@@ -53,7 +53,9 @@ public class SpringFoxConfig {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
                 .operationSelector(operationContext ->
-                        operationContext.requestMappingPattern().startsWith(DEFAULT_INCLUDE_PATTERN))
+                        operationContext.requestMappingPattern().startsWith(DEFAULT_INCLUDE_PATTERN[0]) ||
+                                operationContext.requestMappingPattern().startsWith(DEFAULT_INCLUDE_PATTERN[1])
+                )
                 .build();
     }
 

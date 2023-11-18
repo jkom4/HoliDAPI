@@ -4,6 +4,7 @@ import org.helmo.HolyD.controlers.exception.UserAlreadyExistException;
 import org.helmo.HolyD.controlers.exception.UserNotFoundException;
 import org.helmo.HolyD.models.reponses.User;
 import org.helmo.HolyD.models.requests.UserSignIn;
+import org.helmo.HolyD.models.requests.UserSignInWithProvider;
 import org.helmo.HolyD.models.requests.UserSignUp;
 import org.helmo.HolyD.repository.DTO.RoleDTO;
 import org.helmo.HolyD.repository.DTO.UserDTO;
@@ -21,6 +22,8 @@ import java.time.OffsetDateTime;
 
 @Service
 public class UserService {
+
+    private final String DEFAULT_PASSWD_PROVIDER = "PROVIDER";
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
@@ -60,6 +63,30 @@ public class UserService {
                 userResponse.setTokenConnectionAPI(token);
             }}catch (Exception ex){
                 throw new UserNotFoundException();
+        }
+        return userResponse;
+    }
+
+    public User signInWithProvider(UserSignInWithProvider user) throws UserNotFoundException {
+        if (!userRepository.existsByEmail(user.getEmail())){
+            //Créer l'user si n'existae pas
+            String hashedPassword = passwordEncoder.encode(DEFAULT_PASSWD_PROVIDER);
+            UserDTO userToSave = modelMapper.map(user, UserDTO.class);
+            userToSave.setPasswd(hashedPassword);
+            userRepository.saveAndFlush(userToSave);
+        }
+        User userResponse = null;
+        try{
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(user.getEmail(), DEFAULT_PASSWD_PROVIDER)
+            );
+            if(authentication.isAuthenticated()){
+                String token = jwtService.generate(user.getEmail());
+                UserDTO userConnected = (UserDTO) authentication.getPrincipal();
+                userResponse = modelMapper.map(userConnected, User.class);
+                userResponse.setTokenConnectionAPI(token);
+            }}catch (Exception ex){
+            throw new UserNotFoundException();
         }
         return userResponse;
     }
