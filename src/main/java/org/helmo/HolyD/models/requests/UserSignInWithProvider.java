@@ -1,5 +1,7 @@
 package org.helmo.HolyD.models.requests;
 
+import org.helmo.HolyD.repository.DTO.enums.RoleType;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
@@ -41,5 +43,9 @@ public class UserSignInWithProvider {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+
+    public RoleType getDefaultRoleType(){
+        return RoleType.USER;
     }
 }

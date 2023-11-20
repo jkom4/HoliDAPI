@@ -69,7 +69,7 @@ public class UserService {
 
     public User signInWithProvider(UserSignInWithProvider user) throws UserNotFoundException {
         if (!userRepository.existsByEmail(user.getEmail())){
-            //Créer l'user si n'existae pas
+            //Créer l'user si n'existe pas
             String hashedPassword = passwordEncoder.encode(DEFAULT_PASSWD_PROVIDER);
             UserDTO userToSave = modelMapper.map(user, UserDTO.class);
             userToSave.setPasswd(hashedPassword);
