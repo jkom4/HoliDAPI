@@ -28,14 +28,14 @@ public class VacanceControler implements VacanceControlerSwagger {
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping(value = "/add")
+    @PostMapping(value = "/add")
     public Vacance addVacance(@Valid @RequestBody VacanceAdd vacanceAdd) {
         return vacanceService.add(vacanceAdd);
     }
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping(value = "/addParticipant")
+    @PostMapping(value = "/addParticipant")
     public Vacance addParticipant(@Valid @RequestBody ParticipantAdd participantAdd) {
         return vacanceService.addParticipant(participantAdd);
     }
