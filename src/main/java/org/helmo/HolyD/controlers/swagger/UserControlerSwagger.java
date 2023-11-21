@@ -8,17 +8,20 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.helmo.HolyD.controlers.exception.DateTimeRangeIsNotARangeException;
 import org.helmo.HolyD.controlers.exception.UserAlreadyExistException;
 import org.helmo.HolyD.controlers.exception.UserNotFoundException;
 import org.helmo.HolyD.models.reponses.NbrUserAndNbrUserInHoliday;
 import org.helmo.HolyD.models.reponses.User;
-import org.helmo.HolyD.models.requests.NbrUserAndNbrUserInHolidayRequest;
 import org.helmo.HolyD.models.requests.UserSignIn;
 import org.helmo.HolyD.models.requests.UserSignInWithProvider;
 import org.helmo.HolyD.models.requests.UserSignUp;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.time.OffsetDateTime;
 
 @Api(tags = "user")
 public interface UserControlerSwagger {
@@ -46,7 +49,8 @@ public interface UserControlerSwagger {
 
     @Operation(operationId = "UserControler", summary = "Used to get the number total of user and the number of user in holiday in a range of date.", description = "Return a NbrUserAndNbrUserInHoliday")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = NbrUserAndNbrUserInHoliday.class)), description = "Successful")
+            @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = NbrUserAndNbrUserInHoliday.class)), description = "Successful"),
+            @ApiResponse(responseCode = DateTimeRangeIsNotARangeException.STATUCODE_ERROR, description = DateTimeRangeIsNotARangeException.MESSAGE_ERROR)
     })
-    NbrUserAndNbrUserInHoliday nbrUserAndNbrUserInHolidayByRange(@Valid @RequestBody NbrUserAndNbrUserInHolidayRequest nbrUserAndNbrUserInHolidayRequest);
+    public NbrUserAndNbrUserInHoliday nbrUserAndNbrUserInHolidayByRange(@Valid @NotNull @RequestParam  OffsetDateTime dateDebut, @Valid @NotNull @RequestParam  OffsetDateTime dateFin);
 }

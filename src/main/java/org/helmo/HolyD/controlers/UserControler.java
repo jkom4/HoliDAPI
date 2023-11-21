@@ -1,9 +1,9 @@
 package org.helmo.HolyD.controlers;
 
+import org.helmo.HolyD.controlers.exception.DateTimeRangeIsNotARangeException;
 import org.helmo.HolyD.controlers.swagger.UserControlerSwagger;
 import org.helmo.HolyD.models.reponses.NbrUserAndNbrUserInHoliday;
 import org.helmo.HolyD.models.reponses.User;
-import org.helmo.HolyD.models.requests.NbrUserAndNbrUserInHolidayRequest;
 import org.helmo.HolyD.models.requests.UserSignIn;
 import org.helmo.HolyD.models.requests.UserSignInWithProvider;
 import org.helmo.HolyD.models.requests.UserSignUp;
@@ -13,10 +13,12 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.time.OffsetDateTime;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/user")
 public class UserControler implements UserControlerSwagger {
 
     private final UserService userService;
@@ -27,29 +29,32 @@ public class UserControler implements UserControlerSwagger {
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping(value = "/signup")
+    @PostMapping(value = "/signup", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public User signUp(@Valid @RequestBody UserSignUp user){
         return userService.signUp(user);
     }
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping(value = "/signin")
+    @PostMapping(value = "/signin", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public User signIn(@Valid @RequestBody UserSignIn user){
         return userService.signIn(user);
     }
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping(value = "/signinWithProvider")
+    @PostMapping(value = "/signinWithProvider", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public User signInWithProvider(@Valid @RequestBody UserSignInWithProvider user){
         return userService.signInWithProvider(user);
     }
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/nbrUserAndNbrUserInHolidayByRange")
-    public NbrUserAndNbrUserInHoliday nbrUserAndNbrUserInHolidayByRange(@Valid @RequestBody NbrUserAndNbrUserInHolidayRequest nbrUserAndNbrUserInHolidayRequest){
-        return new NbrUserAndNbrUserInHoliday(userService.getNbrOfUser(), userService.getNbrOfUserInHolidayByRange(nbrUserAndNbrUserInHolidayRequest.getDateDebut(), nbrUserAndNbrUserInHolidayRequest.getDateFin()));
+    @GetMapping(value = "/nbrUserAndNbrUserInHolidayByRange", produces = MediaType.APPLICATION_JSON_VALUE)
+    public NbrUserAndNbrUserInHoliday nbrUserAndNbrUserInHolidayByRange(@Valid @NotNull @RequestParam OffsetDateTime dateDebut, @Valid @NotNull @RequestParam OffsetDateTime dateFin){
+        if(dateDebut.isAfter(dateFin)){
+            throw new DateTimeRangeIsNotARangeException();
+        }
+        return new NbrUserAndNbrUserInHoliday(userService.getNbrOfUser(), userService.getNbrOfUserInHolidayByRange(dateDebut, dateFin));
     }
 
 }
