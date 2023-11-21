@@ -47,7 +47,7 @@ public class UserControler implements UserControlerSwagger {
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping(value = "/nbrUserAndNbrUserInHolidayByRange")
+    @GetMapping(value = "/nbrUserAndNbrUserInHolidayByRange")
     public NbrUserAndNbrUserInHoliday nbrUserAndNbrUserInHolidayByRange(@Valid @RequestBody NbrUserAndNbrUserInHolidayRequest nbrUserAndNbrUserInHolidayRequest){
         return new NbrUserAndNbrUserInHoliday(userService.getNbrOfUser(), userService.getNbrOfUserInHolidayByRange(nbrUserAndNbrUserInHolidayRequest.getDateDebut(), nbrUserAndNbrUserInHolidayRequest.getDateFin()));
     }
