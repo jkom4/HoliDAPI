@@ -30,7 +30,7 @@ public class UserDTO {
     @Size(min = 2, max = 100, message = "Wrong email size min=2 max=100")
     @Column(length = 100, unique = true, nullable = false)
     private String email;
-    @Size(min = 2, max = 100, message = "Wrong password size min=2 max=100")
+    @Size(max = 100, message = "Wrong password size max=100")
     @Column(length = 100, nullable = false)
     private String passwd;
 

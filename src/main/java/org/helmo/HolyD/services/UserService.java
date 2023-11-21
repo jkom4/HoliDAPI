@@ -23,7 +23,7 @@ import java.time.OffsetDateTime;
 @Service
 public class UserService {
 
-    private final String DEFAULT_PASSWD_PROVIDER = "PROVIDER";
+    private final String DEFAULT_PASSWD_PROVIDER = "";
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
