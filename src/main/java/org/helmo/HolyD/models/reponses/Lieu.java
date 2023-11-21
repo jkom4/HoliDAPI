@@ -6,8 +6,8 @@ public class Lieu {
     private double longitude;
     private double latitude;
     private String rue;
-    private int rueNumero;
-    private int codePostal;
+    private String rueNumero;
+    private String codePostal;
     private String ville;
     private String pays;
 
@@ -43,19 +43,19 @@ public class Lieu {
         this.rue = rue;
     }
 
-    public int getRueNumero() {
+    public String getRueNumero() {
         return rueNumero;
     }
 
-    public void setRueNumero(int rueNumero) {
+    public void setRueNumero(String rueNumero) {
         this.rueNumero = rueNumero;
     }
 
-    public int getCodePostal() {
+    public String getCodePostal() {
         return codePostal;
     }
 
-    public void setCodePostal(int codePostal) {
+    public void setCodePostal(String codePostal) {
         this.codePostal = codePostal;
     }
 

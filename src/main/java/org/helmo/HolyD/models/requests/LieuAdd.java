@@ -12,14 +12,14 @@ public class LieuAdd {
     @Min(value = -90, message = "Wrong latitude size max=90")
     @Max(value = 90, message = "Wrong latitude size max=90")
     private double latitude;
-    @Size(min = 2, max = 70, message = "Wrong street size min=2 max=70")
+    @Size(max = 70, message = "Wrong street size max=70")
     private String rue;
-    @Min(value = 0, message = "Wrong street number size min=0")
-    @Max(value = 999999999, message = "Wrong street number size max=999999999")
-    private int rueNumero;
-    @Min(value = 0, message = "Wrong postal code size min=0")
-    @Max(value = 999999999, message = "Wrong postal code size max=999999999")
-    private int codePostal;
+
+    @Size(max = 15, message = "Wrong street number size max=15")
+    private String rueNumero;
+
+    @Size(max = 15, message = "Wrong postal code size max=15")
+    private String codePostal;
     @Size(min = 2, max = 50, message = "Wrong city size min=2 max=50")
     private String ville;
     @Size(min = 2, max = 50, message = "Wrong country size min=2 max=50")
@@ -49,19 +49,19 @@ public class LieuAdd {
         this.rue = rue;
     }
 
-    public int getRueNumero() {
+    public String getRueNumero() {
         return rueNumero;
     }
 
-    public void setRueNumero(int rueNumero) {
+    public void setRueNumero(String rueNumero) {
         this.rueNumero = rueNumero;
     }
 
-    public int getCodePostal() {
+    public String getCodePostal() {
         return codePostal;
     }
 
-    public void setCodePostal(int codePostal) {
+    public void setCodePostal(String codePostal) {
         this.codePostal = codePostal;
     }
 
