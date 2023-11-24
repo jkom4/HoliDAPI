@@ -3,9 +3,13 @@ package org.helmo.HolyD.services;
 import org.helmo.HolyD.controlers.exception.UserAlreadyInsideException;
 import org.helmo.HolyD.controlers.exception.UserNotFoundException;
 import org.helmo.HolyD.controlers.exception.VacanceNotFoundException;
+import org.helmo.HolyD.models.reponses.Activite;
 import org.helmo.HolyD.models.reponses.Vacance;
+import org.helmo.HolyD.models.requests.ActiviteAdd;
 import org.helmo.HolyD.models.requests.ParticipantAdd;
 import org.helmo.HolyD.models.requests.VacanceAdd;
+import org.helmo.HolyD.repository.ActiviteRepository;
+import org.helmo.HolyD.repository.DTO.ActiviteDTO;
 import org.helmo.HolyD.repository.DTO.UserDTO;
 import org.helmo.HolyD.repository.DTO.VacanceDTO;
 import org.helmo.HolyD.repository.UserRepository;
@@ -19,11 +23,14 @@ public class VacanceService {
 
     private final VacanceRepository vacanceRepository;
     private final UserRepository userRepository;
+
+    private final ActiviteRepository activiteRepository;
     private final ModelMapper modelMapper;
 
-    public VacanceService(VacanceRepository vacanceRepository, UserRepository userRepository, ModelMapper modelMapper) {
+    public VacanceService(VacanceRepository vacanceRepository, UserRepository userRepository, ActiviteRepository activiteRepository, ModelMapper modelMapper) {
         this.vacanceRepository = vacanceRepository;
         this.userRepository = userRepository;
+        this.activiteRepository = activiteRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -45,8 +52,17 @@ public class VacanceService {
         if(!vacanceDTO.addParticipant(userDTO)){
             throw new  UserAlreadyInsideException();
         }
-        vacanceRepository.saveAndFlush(vacanceDTO);
-        return modelMapper.map(vacanceDTO, Vacance.class);
+        return modelMapper.map(vacanceRepository.saveAndFlush(vacanceDTO), Vacance.class);
+    }
 
+    public Activite addActivite(ActiviteAdd activiteAdd){
+        UserDTO userConnected = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        VacanceDTO vacanceDTOToAddActiviteIn = vacanceRepository.findByIdAndParticipantsContains(activiteAdd.getIdVacance(), userConnected)
+                .orElseThrow(VacanceNotFoundException::new);
+        ActiviteDTO activiteDTOToAdd = modelMapper.map(activiteAdd, ActiviteDTO.class);
+        activiteDTOToAdd.setOwner(userConnected);
+        activiteDTOToAdd.addParticipant(userConnected);
+        activiteDTOToAdd.setVacance(vacanceDTOToAddActiviteIn);
+        return modelMapper.map(activiteRepository.saveAndFlush(activiteDTOToAdd), Activite.class);
     }
 }

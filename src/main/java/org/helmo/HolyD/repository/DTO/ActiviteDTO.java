@@ -35,7 +35,7 @@ public class ActiviteDTO {
     @ManyToMany
     private Set<UserDTO> participants = new HashSet<>();
 
-    @ManyToOne(optional = false, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+    @ManyToOne(optional = false, cascade={CascadeType.ALL, CascadeType.REMOVE}) //All because Persist is Bugged for this one (vacance and lieu transient works with PERSIST)
     private LieuDTO lieu;
 
     @ManyToOne(optional = false)
@@ -95,6 +95,15 @@ public class ActiviteDTO {
 
     public void setParticipants(Set<UserDTO> participants) {
         this.participants = participants;
+    }
+
+    public boolean addParticipant(UserDTO userDTO){
+        if(!this.participants.contains(userDTO)) {
+            this.participants.add(userDTO);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public LieuDTO getLieu() {
