@@ -1,5 +1,6 @@
 package org.helmo.HolyD.services;
 
+import org.helmo.HolyD.controlers.exception.DateTimeIntervalIsNotAIntervalException;
 import org.helmo.HolyD.controlers.exception.UserAlreadyInsideException;
 import org.helmo.HolyD.controlers.exception.UserNotFoundException;
 import org.helmo.HolyD.controlers.exception.VacanceNotFoundException;
@@ -35,6 +36,8 @@ public class VacanceService {
     }
 
     public Vacance add(VacanceAdd vacanceAdd) {
+        if(vacanceAdd.getDateDebut().isAfter(vacanceAdd.getDateFin()))
+            throw new DateTimeIntervalIsNotAIntervalException();
         UserDTO userConnected = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         VacanceDTO vacanceDTOToAdd = modelMapper.map(vacanceAdd, VacanceDTO.class);
         vacanceDTOToAdd.setOwner(userConnected);
@@ -56,6 +59,8 @@ public class VacanceService {
     }
 
     public Activite addActivite(ActiviteAdd activiteAdd){
+        if(activiteAdd.getDateDebut().isAfter(activiteAdd.getDateFin()))
+            throw new DateTimeIntervalIsNotAIntervalException();
         UserDTO userConnected = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         VacanceDTO vacanceDTOToAddActiviteIn = vacanceRepository.findByIdAndParticipantsContains(activiteAdd.getIdVacance(), userConnected)
                 .orElseThrow(VacanceNotFoundException::new);

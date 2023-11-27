@@ -2,15 +2,15 @@ package org.helmo.HolyD.controlers.exception;
 
 import org.helmo.HolyD.models.reponses.Error;
 
-public class DateTimeRangeIsNotARangeException extends RuntimeException {
+public class DateTimeIntervalIsNotAIntervalException extends RuntimeException {
 
     public static final String STATUCODE_ERROR = "400";
     public static final String ERROR_ERROR = "Bad request";
-    public static final String MESSAGE_ERROR = "The begin datTime of the range is bigger than the end dateTime";
+    public static final String MESSAGE_ERROR = "The begin datTime of the interval is bigger than the end dateTime of the interval";
 
     private final Error ERROR;
 
-    public DateTimeRangeIsNotARangeException(){
+    public DateTimeIntervalIsNotAIntervalException(){
         super(MESSAGE_ERROR);
         this.ERROR = new Error(STATUCODE_ERROR, ERROR_ERROR, MESSAGE_ERROR);
     }

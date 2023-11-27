@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.helmo.HolyD.controlers.exception.DateTimeRangeIsNotARangeException;
+import org.helmo.HolyD.controlers.exception.DateTimeIntervalIsNotAIntervalException;
 import org.helmo.HolyD.controlers.exception.UserAlreadyExistException;
 import org.helmo.HolyD.controlers.exception.UserNotFoundException;
 import org.helmo.HolyD.models.reponses.NbrUserAndNbrUserInHoliday;
@@ -50,7 +50,7 @@ public interface UserControlerSwagger {
     @Operation(operationId = "UserControler", summary = "Used to get the number total of user and the number of user in holiday in a range of date.", description = "Return a NbrUserAndNbrUserInHoliday")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = NbrUserAndNbrUserInHoliday.class)), description = "Successful"),
-            @ApiResponse(responseCode = DateTimeRangeIsNotARangeException.STATUCODE_ERROR, description = DateTimeRangeIsNotARangeException.MESSAGE_ERROR)
+            @ApiResponse(responseCode = DateTimeIntervalIsNotAIntervalException.STATUCODE_ERROR, description = DateTimeIntervalIsNotAIntervalException.MESSAGE_ERROR)
     })
     public NbrUserAndNbrUserInHoliday nbrUserAndNbrUserInHolidayByRange(@Valid @NotNull @RequestParam  OffsetDateTime dateDebut, @Valid @NotNull @RequestParam  OffsetDateTime dateFin);
 }

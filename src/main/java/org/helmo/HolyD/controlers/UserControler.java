@@ -1,6 +1,6 @@
 package org.helmo.HolyD.controlers;
 
-import org.helmo.HolyD.controlers.exception.DateTimeRangeIsNotARangeException;
+import org.helmo.HolyD.controlers.exception.DateTimeIntervalIsNotAIntervalException;
 import org.helmo.HolyD.controlers.swagger.UserControlerSwagger;
 import org.helmo.HolyD.models.reponses.NbrUserAndNbrUserInHoliday;
 import org.helmo.HolyD.models.reponses.User;
@@ -52,7 +52,7 @@ public class UserControler implements UserControlerSwagger {
     @GetMapping(value = "/nbrUserAndNbrUserInHolidayByRange", produces = MediaType.APPLICATION_JSON_VALUE)
     public NbrUserAndNbrUserInHoliday nbrUserAndNbrUserInHolidayByRange(@Valid @NotNull @RequestParam OffsetDateTime dateDebut, @Valid @NotNull @RequestParam OffsetDateTime dateFin){
         if(dateDebut.isAfter(dateFin)){
-            throw new DateTimeRangeIsNotARangeException();
+            throw new DateTimeIntervalIsNotAIntervalException();
         }
         return new NbrUserAndNbrUserInHoliday(userService.getNbrOfUser(), userService.getNbrOfUserInHolidayByRange(dateDebut, dateFin));
     }

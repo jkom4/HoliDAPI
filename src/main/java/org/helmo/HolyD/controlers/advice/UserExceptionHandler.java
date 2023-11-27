@@ -1,6 +1,6 @@
 package org.helmo.HolyD.controlers.advice;
 
-import org.helmo.HolyD.controlers.exception.DateTimeRangeIsNotARangeException;
+import org.helmo.HolyD.controlers.exception.DateTimeIntervalIsNotAIntervalException;
 import org.helmo.HolyD.controlers.exception.UserAlreadyExistException;
 import org.helmo.HolyD.controlers.exception.UserAlreadyInsideException;
 import org.helmo.HolyD.controlers.exception.UserNotFoundException;
@@ -36,9 +36,9 @@ public class UserExceptionHandler {
     }
 
     @ResponseBody
-    @ExceptionHandler(DateTimeRangeIsNotARangeException.class)
+    @ExceptionHandler(DateTimeIntervalIsNotAIntervalException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    Error dateTimeRangeIsNotARangeExceptionHandler(DateTimeRangeIsNotARangeException ex) {
+    Error dateTimeIntervalIsNotAIntervalExceptionHandler(DateTimeIntervalIsNotAIntervalException ex) {
         return ex.getERROR();
     }
 }
