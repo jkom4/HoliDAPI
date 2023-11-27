@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.helmo.HolyD.controlers.exception.DateTimeIntervalIsNotAIntervalException;
 import org.helmo.HolyD.controlers.exception.UserNotFoundException;
 import org.helmo.HolyD.controlers.exception.VacanceNotFoundException;
 import org.helmo.HolyD.models.reponses.Activite;
@@ -23,7 +24,7 @@ public interface VacanceControlerSwagger {
     @Operation(operationId = "VacanceControler", summary = "Add vacance to a user (Owner).", description = "Return Successful or error")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Vacance.class)), description = "Successful"),
-            @ApiResponse(responseCode = "400", description = "Unknow Error")
+            @ApiResponse(responseCode = DateTimeIntervalIsNotAIntervalException.STATUCODE_ERROR, description = DateTimeIntervalIsNotAIntervalException.MESSAGE_ERROR)
     })
     Vacance addVacance(@Valid @RequestBody VacanceAdd vacanceAdd);
 
@@ -39,7 +40,8 @@ public interface VacanceControlerSwagger {
     @Operation(operationId = "VacanceControler", summary = "Add activite to a vacance.", description = "Return Successful or error")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Activite.class)), description = "Successful"),
-            @ApiResponse(responseCode = VacanceNotFoundException.STATUCODE_ERROR, description = VacanceNotFoundException.MESSAGE_ERROR)
+            @ApiResponse(responseCode = VacanceNotFoundException.STATUCODE_ERROR, description = VacanceNotFoundException.MESSAGE_ERROR),
+            @ApiResponse(responseCode = DateTimeIntervalIsNotAIntervalException.STATUCODE_ERROR, description = DateTimeIntervalIsNotAIntervalException.MESSAGE_ERROR)
 
     })
     Activite addActivite(@Valid @RequestBody ActiviteAdd activiteAdd);

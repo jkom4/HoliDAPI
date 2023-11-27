@@ -24,7 +24,6 @@ public class VacanceService {
 
     private final VacanceRepository vacanceRepository;
     private final UserRepository userRepository;
-
     private final ActiviteRepository activiteRepository;
     private final ModelMapper modelMapper;
 
