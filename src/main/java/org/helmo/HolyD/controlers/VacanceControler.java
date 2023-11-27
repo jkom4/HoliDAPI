@@ -41,11 +41,4 @@ public class VacanceControler implements VacanceControlerSwagger {
     public Vacance addParticipant(@Valid @RequestBody ParticipantAdd participantAdd) {
         return vacanceService.addParticipant(participantAdd);
     }
-
-    @Override
-    @ResponseStatus(HttpStatus.OK)
-    @PostMapping(value = "/addActivite")
-    public Activite addActivite(@Valid @RequestBody ActiviteAdd activiteAdd) {
-        return vacanceService.addActivite(activiteAdd);
-    }
 }

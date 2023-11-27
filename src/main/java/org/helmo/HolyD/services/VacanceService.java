@@ -56,17 +56,4 @@ public class VacanceService {
         }
         return modelMapper.map(vacanceRepository.saveAndFlush(vacanceDTO), Vacance.class);
     }
-
-    public Activite addActivite(ActiviteAdd activiteAdd){
-        if(activiteAdd.getDateDebut().isAfter(activiteAdd.getDateFin()))
-            throw new DateTimeIntervalIsNotAIntervalException();
-        UserDTO userConnected = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        VacanceDTO vacanceDTOToAddActiviteIn = vacanceRepository.findByIdAndParticipantsContains(activiteAdd.getIdVacance(), userConnected)
-                .orElseThrow(VacanceNotFoundException::new);
-        ActiviteDTO activiteDTOToAdd = modelMapper.map(activiteAdd, ActiviteDTO.class);
-        activiteDTOToAdd.setOwner(userConnected);
-        activiteDTOToAdd.addParticipant(userConnected);
-        activiteDTOToAdd.setVacance(vacanceDTOToAddActiviteIn);
-        return modelMapper.map(activiteRepository.saveAndFlush(activiteDTOToAdd), Activite.class);
-    }
 }

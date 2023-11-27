@@ -2,6 +2,7 @@ package org.helmo.HolyD.controlers;
 
 import org.helmo.HolyD.controlers.swagger.ActiviteControlerSwagger;
 import org.helmo.HolyD.models.reponses.Activite;
+import org.helmo.HolyD.models.requests.ActiviteAdd;
 import org.helmo.HolyD.models.requests.ParticipantAdd;
 import org.helmo.HolyD.services.ActiviteService;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,13 @@ public class ActiviteControler implements ActiviteControlerSwagger {
         this.activiteService = activiteService;
     }
 
+    @Override
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping(value = "/add")
+    public Activite add(@Valid @RequestBody ActiviteAdd activiteAdd) {
+        return activiteService.add(activiteAdd);
+    }
+    
     @Override
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "/addParticipant")

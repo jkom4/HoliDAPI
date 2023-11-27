@@ -36,14 +36,4 @@ public interface VacanceControlerSwagger {
 
     })
     Vacance addParticipant(@Valid @RequestBody ParticipantAdd participantAdd);
-
-    @Operation(operationId = "VacanceControler", summary = "Add activite to a vacance.", description = "Return Successful or error")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Activite.class)), description = "Successful"),
-            @ApiResponse(responseCode = VacanceNotFoundException.STATUCODE_ERROR, description = VacanceNotFoundException.MESSAGE_ERROR),
-            @ApiResponse(responseCode = DateTimeIntervalIsNotAIntervalException.STATUCODE_ERROR, description = DateTimeIntervalIsNotAIntervalException.MESSAGE_ERROR)
-
-    })
-    Activite addActivite(@Valid @RequestBody ActiviteAdd activiteAdd);
-
 }
