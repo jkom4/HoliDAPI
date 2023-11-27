@@ -1,12 +1,9 @@
 package org.helmo.HolyD.models.mapper;
 
 import org.helmo.HolyD.models.reponses.User;
-import org.helmo.HolyD.models.reponses.Vacance;
 import org.helmo.HolyD.models.requests.UserSignInWithProvider;
 import org.helmo.HolyD.models.requests.UserSignUp;
 import org.helmo.HolyD.repository.DTO.UserDTO;
-import org.helmo.HolyD.repository.DTO.VacanceDTO;
-import org.helmo.HolyD.repository.DTO.enums.RoleType;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

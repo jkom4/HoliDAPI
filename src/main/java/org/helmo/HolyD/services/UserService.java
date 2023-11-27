@@ -2,6 +2,7 @@ package org.helmo.HolyD.services;
 
 import org.helmo.HolyD.controlers.exception.UserAlreadyExistException;
 import org.helmo.HolyD.controlers.exception.UserNotFoundException;
+import org.helmo.HolyD.models.reponses.NbrUserInHolidayByCountry;
 import org.helmo.HolyD.models.reponses.User;
 import org.helmo.HolyD.models.requests.UserSignIn;
 import org.helmo.HolyD.models.requests.UserSignInWithProvider;
@@ -18,7 +19,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 import java.time.OffsetDateTime;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -94,7 +98,10 @@ public class UserService {
     public int getNbrOfUser(){
         return userRepository.countDistinctByRoleIs(new RoleDTO(RoleType.USER));
     }
-    public int getNbrOfUserInHolidayByRange(OffsetDateTime dateDebutRange, OffsetDateTime dateFinRange){
-        return userRepository.countNbrOfUserInHolidayForRange(dateDebutRange, dateFinRange);
+    public Collection<NbrUserInHolidayByCountry> getNbrOfUserInHolidayByRange(OffsetDateTime dateDebutRange, OffsetDateTime dateFinRange){
+        return userRepository.countNbrOfUserInHolidayForRange(dateDebutRange, dateFinRange)
+                        .stream()
+                        .map(tuple -> new NbrUserInHolidayByCountry(tuple.get("pays").toString(), Integer.parseInt(tuple.get("nbrUserInHoliday").toString())))
+                        .collect(Collectors.toList());
     }
 }

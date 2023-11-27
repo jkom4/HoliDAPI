@@ -1,13 +1,15 @@
 package org.helmo.HolyD.models.reponses;
 
+import java.util.Collection;
+
 public class NbrUserAndNbrUserInHoliday {
 
     private int nbrUserTotal;
-    private int nbrUserInHoliday;
+    private Collection<NbrUserInHolidayByCountry> nbrUserInHolidayByCountry;
 
-    public NbrUserAndNbrUserInHoliday(int nbrUserTotal, int nbrUserInHoliday) {
+    public NbrUserAndNbrUserInHoliday(int nbrUserTotal, Collection<NbrUserInHolidayByCountry> nbrUserInHolidayByCountry) {
         this.nbrUserTotal = nbrUserTotal;
-        this.nbrUserInHoliday = nbrUserInHoliday;
+        this.nbrUserInHolidayByCountry = nbrUserInHolidayByCountry;
     }
 
     public int getNbrUserTotal() {
@@ -18,19 +20,19 @@ public class NbrUserAndNbrUserInHoliday {
         this.nbrUserTotal = nbrUserTotal;
     }
 
-    public int getNbrUserInHoliday() {
-        return nbrUserInHoliday;
+    public Collection<NbrUserInHolidayByCountry> getNbrUserInHolidayByCountry() {
+        return nbrUserInHolidayByCountry;
     }
 
-    public void setNbrUserInHoliday(int nbrUserInHoliday) {
-        this.nbrUserInHoliday = nbrUserInHoliday;
+    public void setNbrUserInHolidayByCountryMap(Collection<NbrUserInHolidayByCountry> nbrUserInHolidayByCountry) {
+        this.nbrUserInHolidayByCountry = nbrUserInHolidayByCountry;
     }
 
     @Override
     public String toString() {
         return "NbrUserAndNbrUserInHoliday{" +
                 "nbrUserTotal=" + nbrUserTotal +
-                ", nbrUserInHoliday=" + nbrUserInHoliday +
+                ", nbrUserInHolidayByCountry=" + nbrUserInHolidayByCountry +
                 '}';
     }
 }

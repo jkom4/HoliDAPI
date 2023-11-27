@@ -5,7 +5,9 @@ import org.helmo.HolyD.repository.DTO.UserDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import javax.persistence.Tuple;
 import java.time.OffsetDateTime;
+import java.util.Collection;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserDTO, Long> {
@@ -17,7 +19,7 @@ public interface UserRepository extends JpaRepository<UserDTO, Long> {
 
     int countDistinctByRoleIs(RoleDTO roleUser);
 
-    @Query(value = "SELECT COUNT(u.id) FROM UserDTO u JOIN u.vacances v Where v.dateFin >= ?1 AND v.dateDebut <= ?2") //DISTINCT  TO_TIMESTAMP(?1,'DD-MON-RRHH24:MI:SS.FF')
-    int countNbrOfUserInHolidayForRange(OffsetDateTime dateDebutRange, OffsetDateTime dateFinRange);
+    @Query(value = "SELECT v.lieu.pays as pays, COUNT(u.id) as nbrUserInHoliday FROM UserDTO u JOIN u.vacances v Where v.dateFin >= ?1 AND v.dateDebut <= ?2 GROUP BY v.lieu.pays")
+    Collection<Tuple> countNbrOfUserInHolidayForRange(OffsetDateTime dateDebutRange, OffsetDateTime dateFinRange);
 
 }
