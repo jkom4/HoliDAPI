@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
+import java.time.OffsetDateTime;
 import java.util.*;
 
 @Entity
@@ -166,6 +167,12 @@ public class UserDTO {
         this.sendedMessages = sendedMessages;
     }
 
+    public boolean userIsAlreadyInHoliday(OffsetDateTime dateDebut, OffsetDateTime dateFin){
+        return vacances.stream()
+                .anyMatch((holiD) ->
+                        ((holiD.getDateDebut().isBefore(dateFin) || holiD.getDateDebut().equals(dateFin)) &&
+                        (holiD.getDateFin().isAfter(dateDebut) || holiD.getDateFin().equals(dateFin))));
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

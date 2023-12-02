@@ -49,12 +49,9 @@ public class UserControler implements UserControlerSwagger {
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/nbrUserAndNbrUserInHolidayByRange", produces = MediaType.APPLICATION_JSON_VALUE)
-    public NbrUserAndNbrUserInHoliday nbrUserAndNbrUserInHolidayByRange(@Valid @NotNull @RequestParam OffsetDateTime dateDebut, @Valid @NotNull @RequestParam OffsetDateTime dateFin){
-        if(dateDebut.isAfter(dateFin)){
-            throw new DateTimeIntervalIsNotAIntervalException();
-        }
-        return new NbrUserAndNbrUserInHoliday(userService.getNbrOfUser(), userService.getNbrOfUserInHolidayByRange(dateDebut, dateFin));
+    @GetMapping(value = "/nbrUserAndNbrUserInHolidayForADate", produces = MediaType.APPLICATION_JSON_VALUE)
+    public NbrUserAndNbrUserInHoliday nbrUserAndNbrUserInHolidayForADate(@Valid @NotNull @RequestParam OffsetDateTime dateTime){
+        return new NbrUserAndNbrUserInHoliday(userService.getNbrOfUser(), userService.getNbrOfUserInHolidayForADate(dateTime));
     }
 
 }

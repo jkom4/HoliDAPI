@@ -98,8 +98,8 @@ public class UserService {
     public int getNbrOfUser(){
         return userRepository.countDistinctByRoleIs(new RoleDTO(RoleType.USER));
     }
-    public Collection<NbrUserInHolidayByCountry> getNbrOfUserInHolidayByRange(OffsetDateTime dateDebutRange, OffsetDateTime dateFinRange){
-        return userRepository.countNbrOfUserInHolidayForRange(dateDebutRange, dateFinRange)
+    public Collection<NbrUserInHolidayByCountry> getNbrOfUserInHolidayForADate(OffsetDateTime dateTime){
+        return userRepository.countNbrOfUserInHolidayForADate(dateTime)
                         .stream()
                         .map(tuple -> new NbrUserInHolidayByCountry(tuple.get("pays").toString(), Integer.parseInt(tuple.get("nbrUserInHoliday").toString())))
                         .collect(Collectors.toList());

@@ -49,8 +49,7 @@ public interface UserControlerSwagger {
 
     @Operation(operationId = "UserControler", summary = "Used to get the number total of user and the number of user in holiday in a range of date.", description = "Return a NbrUserAndNbrUserInHoliday")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = NbrUserAndNbrUserInHoliday.class)), description = "Successful"),
-            @ApiResponse(responseCode = DateTimeIntervalIsNotAIntervalException.STATUCODE_ERROR, description = DateTimeIntervalIsNotAIntervalException.MESSAGE_ERROR)
+            @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = NbrUserAndNbrUserInHoliday.class)), description = "Successful")
     })
-    public NbrUserAndNbrUserInHoliday nbrUserAndNbrUserInHolidayByRange(@Valid @NotNull @RequestParam  OffsetDateTime dateDebut, @Valid @NotNull @RequestParam  OffsetDateTime dateFin);
+    public NbrUserAndNbrUserInHoliday nbrUserAndNbrUserInHolidayForADate(@Valid @NotNull @RequestParam OffsetDateTime dateTime);
 }

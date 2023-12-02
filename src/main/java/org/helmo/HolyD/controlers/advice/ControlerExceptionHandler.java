@@ -51,4 +51,34 @@ public class ControlerExceptionHandler {
     Error activiteNotFoundHandler(ActiviteNotFoundException ex) {
         return ex.getERROR();
     }
+
+    @ResponseBody
+    @ExceptionHandler(DateTimeIsInPastException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Error dateTimeIsInPastHandler(DateTimeIsInPastException ex) {
+        return ex.getERROR();
+    }
+
+
+    @ResponseBody
+    @ExceptionHandler(IntervalActiviteIsNotInIntervalVacanceException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Error intervalActiviteIsNotInIntervalVacanceExceptionHandler(IntervalActiviteIsNotInIntervalVacanceException ex) {
+        return ex.getERROR();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(UserAlreadyInHolidayException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Error userAlreadyInHolidayExceptionHandler(UserAlreadyInHolidayException ex) {
+        return ex.getERROR();
+    }
+    @ResponseBody
+    @ExceptionHandler(UserAlreadyInActiviteException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Error userAlreadyInActiviteExceptionHandler(UserAlreadyInActiviteException ex) {
+        return ex.getERROR();
+    }
+
+
 }

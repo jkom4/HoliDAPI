@@ -39,7 +39,7 @@ public class SecurityConfig {
                     .antMatchers(HttpMethod.POST,"/user/signup").permitAll()
                     .antMatchers(HttpMethod.POST, "/user/signin").permitAll()
                     .antMatchers(HttpMethod.POST, "/user/signinWithProvider").permitAll()
-                    .antMatchers(HttpMethod.GET, "/user/nbrUserAndNbrUserInHolidayByRange").permitAll()
+                    .antMatchers(HttpMethod.GET, "/user/nbrUserAndNbrUserInHolidayForADate").permitAll()
                     .antMatchers(SWAGGER_LIST).permitAll()
                     .anyRequest().authenticated()
                 .and().sessionManagement(httpSecuritySessionManagementConfigurer ->

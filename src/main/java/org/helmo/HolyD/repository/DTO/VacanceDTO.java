@@ -132,6 +132,11 @@ public class VacanceDTO {
         this.messages = messages;
     }
 
+    public boolean intervalIsInside(OffsetDateTime dateDebut, OffsetDateTime dateFin){
+        return ((dateDebut.isAfter(this.dateDebut) || dateDebut.equals(this.dateDebut)) &&
+                (dateFin.isBefore(this.dateFin) || dateFin.equals(this.dateFin)));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
