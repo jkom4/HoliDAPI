@@ -10,6 +10,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,8 +19,8 @@ import java.util.List;
 public class SpringFoxConfig {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final String[] DEFAULT_INCLUDE_PATTERN = {"/vacance/", "/REST_AHME_VERD_WABO/vacance/",
-            "/activite/", "/REST_AHME_VERD_WABO/activite/"};
+    public static final List<String> DEFAULT_INCLUDE_PATTERN = Arrays.asList("/vacance/", "/REST_AHME_VERD_WABO/vacance/",
+            "/activite/", "/REST_AHME_VERD_WABO/activite/");
 
     @Bean
     public Docket api() {
@@ -51,8 +52,9 @@ public class SpringFoxConfig {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
                 .operationSelector(operationContext ->
-                        operationContext.requestMappingPattern().startsWith(DEFAULT_INCLUDE_PATTERN[0]) ||
-                                operationContext.requestMappingPattern().startsWith(DEFAULT_INCLUDE_PATTERN[1])
+                        DEFAULT_INCLUDE_PATTERN.stream().anyMatch(
+                                pattern -> operationContext.requestMappingPattern().startsWith(pattern)
+                        )
                 )
                 .build();
     }

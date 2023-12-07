@@ -1,8 +1,10 @@
 package org.helmo.HolyD.models.mapper;
 
 import org.helmo.HolyD.models.reponses.User;
+import org.helmo.HolyD.models.requests.ActiviteAdd;
 import org.helmo.HolyD.models.requests.UserSignInWithProvider;
 import org.helmo.HolyD.models.requests.UserSignUp;
+import org.helmo.HolyD.repository.DTO.ActiviteDTO;
 import org.helmo.HolyD.repository.DTO.UserDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +21,8 @@ public class ModelMapperConfig {
                .addMapping(UserSignUp::getDefaultRoleType, UserDTO::setRoleWithRoleType);
         modelMapper.typeMap(UserSignInWithProvider.class, UserDTO.class)
                 .addMapping(UserSignInWithProvider::getDefaultRoleType, UserDTO::setRoleWithRoleType);
+        modelMapper.typeMap(ActiviteAdd.class, ActiviteDTO.class)
+                .addMappings(mapping -> mapping.skip(ActiviteAdd::getIdVacance, ActiviteDTO::setId));
         return modelMapper;
     }
 }

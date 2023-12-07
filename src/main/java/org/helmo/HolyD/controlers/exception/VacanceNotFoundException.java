@@ -6,7 +6,7 @@ public class VacanceNotFoundException extends RuntimeException {
 
     public static final String STATUCODE_ERROR = "400";
     public static final String ERROR_ERROR = "Bad request";
-    public static final String MESSAGE_ERROR = "Could not find vacance or user not in";
+    public static final String MESSAGE_ERROR = "Could not find vacance or user that ask for add an other user is not in";
 
     private final Error ERROR;
 

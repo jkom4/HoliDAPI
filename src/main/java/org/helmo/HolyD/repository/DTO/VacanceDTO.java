@@ -33,16 +33,16 @@ public class VacanceDTO {
     @JoinColumn(nullable = false)
     private UserDTO owner;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<UserDTO> participants = new HashSet<>();
 
-    @OneToMany(mappedBy = "vacance", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "vacance", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
     private Set<ActiviteDTO> activites = new HashSet<>();
 
     @ManyToOne(optional = false, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
     private LieuDTO lieu;
 
-    @OneToMany(mappedBy="vacance", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="vacance", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
     private Set<MessageDTO> messages = new HashSet<>();
 
     public Long getId() {
@@ -132,9 +132,16 @@ public class VacanceDTO {
         this.messages = messages;
     }
 
-    public boolean intervalIsInside(OffsetDateTime dateDebut, OffsetDateTime dateFin){
+    public boolean intervalIsInside(OffsetDateTime dateDebut, OffsetDateTime dateFin){ //A reverifier
         return ((dateDebut.isAfter(this.dateDebut) || dateDebut.equals(this.dateDebut)) &&
                 (dateFin.isBefore(this.dateFin) || dateFin.equals(this.dateFin)));
+    }
+    public boolean userHasAlreadyAtciviteForDateTimeInterval(UserDTO userDTO, OffsetDateTime dateDebut, OffsetDateTime dateFin){
+        for (ActiviteDTO acti : this.activites) {
+            if(acti.intervalIsInside(dateDebut, dateFin) && acti.userIsInside(userDTO))
+                return true;
+        }
+        return false;
     }
 
     @Override

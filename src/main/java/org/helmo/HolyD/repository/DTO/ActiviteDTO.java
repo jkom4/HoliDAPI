@@ -32,7 +32,7 @@ public class ActiviteDTO {
     @JoinColumn(nullable = false)
     private UserDTO owner;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<UserDTO> participants = new HashSet<>();
 
     @ManyToOne(optional = false, cascade={CascadeType.ALL, CascadeType.REMOVE}) //All because Persist is Bugged for this one (vacance and lieu transient works with PERSIST)
@@ -128,6 +128,13 @@ public class ActiviteDTO {
         if (o == null || getClass() != o.getClass()) return false;
         ActiviteDTO activite = (ActiviteDTO) o;
         return id.equals(activite.id);
+    }
+    public boolean intervalIsInside(OffsetDateTime dateDebut, OffsetDateTime dateFin){
+        return ((dateDebut.isAfter(this.dateDebut) || dateDebut.equals(this.dateDebut)) &&
+                (dateFin.isBefore(this.dateFin) || dateFin.equals(this.dateFin)));
+    }
+    public boolean userIsInside(UserDTO userDTO){
+        return this.participants.contains(userDTO);
     }
 
     @Override

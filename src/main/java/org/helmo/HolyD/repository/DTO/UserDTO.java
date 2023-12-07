@@ -41,7 +41,7 @@ public class UserDTO {
     @OneToMany(mappedBy = "owner", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
     private Set<ActiviteDTO> ownedActivites = new HashSet<>();
 
-    @ManyToMany(mappedBy = "participants")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "participants")
     private Set<VacanceDTO> vacances = new HashSet<>();
 
     @OneToMany(mappedBy = "sender", cascade={CascadeType.REMOVE}, orphanRemoval=true)
