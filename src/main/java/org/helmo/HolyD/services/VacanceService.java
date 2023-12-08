@@ -51,7 +51,7 @@ public class VacanceService {
         if(userDTO.userIsAlreadyInHoliday(vacanceDTO.getDateDebut(), vacanceDTO.getDateFin()))
             throw new UserAlreadyInHolidayException();
         if(!vacanceDTO.addParticipant(userDTO)){
-            throw new  UserAlreadyInsideException();
+            throw new UserAlreadyInsideException();
         }
         return modelMapper.map(vacanceRepository.saveAndFlush(vacanceDTO), Vacance.class);
     }

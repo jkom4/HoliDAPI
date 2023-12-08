@@ -143,6 +143,24 @@ public class VacanceDTO {
         }
         return false;
     }
+    public boolean userHasAlreadyAtciviteForDateTimeIntervalWithOutOneActi(UserDTO userDTO, OffsetDateTime dateDebut, OffsetDateTime dateFin, Long idActivite){
+        for (ActiviteDTO acti : this.activites) {
+            if(Objects.equals(acti.getId(), idActivite) && acti.intervalIsInside(dateDebut, dateFin) && acti.userIsInside(userDTO))
+                return true;
+        }
+        return false;
+    }
+    public ActiviteDTO editDateOfActivite(Long id, OffsetDateTime dateDebut, OffsetDateTime dateFin) {
+        for (ActiviteDTO acti : this.activites) {
+            if(Objects.equals(acti.getId(), id)){
+                acti.setDateDebut(dateDebut);
+                acti.setDateFin(dateFin);
+                return acti;
+            }
+
+        }
+        return null;
+    }
 
     @Override
     public boolean equals(Object o) {

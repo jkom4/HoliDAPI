@@ -3,6 +3,7 @@ package org.helmo.HolyD.controlers;
 import org.helmo.HolyD.controlers.swagger.ActiviteControlerSwagger;
 import org.helmo.HolyD.models.reponses.Activite;
 import org.helmo.HolyD.models.requests.ActiviteAdd;
+import org.helmo.HolyD.models.requests.OffsetDateTimeChange;
 import org.helmo.HolyD.models.requests.ParticipantAdd;
 import org.helmo.HolyD.services.ActiviteService;
 import org.springframework.http.HttpStatus;
@@ -34,5 +35,10 @@ public class ActiviteControler implements ActiviteControlerSwagger {
     @PostMapping(value = "/addParticipant")
     public Activite addParticipant(@Valid @RequestBody ParticipantAdd participantAdd) {
         return activiteService.addParticipant(participantAdd);
+    }
+
+    @Override
+    public Activite changeDateTimeOfActivite(@Valid @RequestBody OffsetDateTimeChange offsetDateTimeChange) {
+        return activiteService.changeDateActivite(offsetDateTimeChange);
     }
 }
