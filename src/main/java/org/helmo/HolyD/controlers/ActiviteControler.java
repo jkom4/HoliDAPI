@@ -38,6 +38,8 @@ public class ActiviteControler implements ActiviteControlerSwagger {
     }
 
     @Override
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping(value = "/changeDateTimeOfActivite")
     public Activite changeDateTimeOfActivite(@Valid @RequestBody OffsetDateTimeChange offsetDateTimeChange) {
         return activiteService.changeDateActivite(offsetDateTimeChange);
     }
