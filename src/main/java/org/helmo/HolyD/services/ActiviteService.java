@@ -31,13 +31,13 @@ public class ActiviteService {
         this.modelMapper = modelMapper;
     }
 
-    public Activite add(ActiviteAdd activiteAdd){
-        if(activiteAdd.getDateDebut().isAfter(activiteAdd.getDateFin()))
+    public Activite add(Long idVacance, ActiviteAdd activiteAdd){
+        if(activiteAdd.getDateDebut().isAfter(activiteAdd.getDateFin()) || activiteAdd.getDateDebut().isEqual(activiteAdd.getDateFin()))
             throw new DateTimeIntervalIsNotAIntervalException();
         else if (activiteAdd.getDateDebut().isBefore(OffsetDateTime.now()) || activiteAdd.getDateFin().isBefore(OffsetDateTime.now()))
             throw new DateTimeIsInPastException();
         UserDTO userConnected = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        VacanceDTO vacanceDTOToAddActiviteIn = vacanceRepository.findByIdAndParticipantsContains(activiteAdd.getIdVacance(), userConnected)
+        VacanceDTO vacanceDTOToAddActiviteIn = vacanceRepository.findByIdAndParticipantsContains(idVacance, userConnected)
                 .orElseThrow(VacanceNotFoundException::new);
         if(!vacanceDTOToAddActiviteIn.intervalIsInside(activiteAdd.getDateDebut(), activiteAdd.getDateFin()))
             throw new IntervalActiviteIsNotInIntervalVacanceException();
@@ -50,12 +50,15 @@ public class ActiviteService {
         return modelMapper.map(activiteRepository.saveAndFlush(activiteDTOToAdd), Activite.class);
     }
 
-    public Activite addParticipant(ParticipantAdd participantAdd){
+    public Activite addParticipant(Long idvacance, Long idActivite, ParticipantAdd participantAdd){
         UserDTO userConnected = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDTO userDTO = userRepository.findByEmail(participantAdd.getEmail())
                 .orElseThrow(UserNotFoundException::new);
-        ActiviteDTO activiteDTO = activiteRepository.findById(participantAdd.getId())
+        ActiviteDTO activiteDTO = activiteRepository.findByIdAndParticipantsContains(idActivite, userConnected)
                 .orElseThrow(ActiviteNotFoundException::new);
+        if(idvacance.longValue() != activiteDTO.getVacance().getId()) {
+            throw new ActiviteNotFoundException();
+        }
         VacanceDTO vacanceDTO = vacanceRepository.findByIdAndParticipantsContains(activiteDTO.getVacance().getId(), userConnected)
                 .orElseThrow(VacanceNotFoundException::new);
         if (vacanceDTO.userHasAlreadyAtciviteForDateTimeInterval(userDTO, activiteDTO.getDateDebut(), activiteDTO.getDateFin()))
@@ -66,20 +69,23 @@ public class ActiviteService {
         return modelMapper.map(activiteRepository.saveAndFlush(activiteDTO), Activite.class);
     }
 
-    public Activite changeDateActivite(OffsetDateTimeChange offsetDateTimeChange){
-        if(offsetDateTimeChange.getDateDebut().isAfter(offsetDateTimeChange.getDateFin()))
+    public Activite changeDateActivite(Long idvacance, Long idActivite, OffsetDateTimeChange offsetDateTimeChange){
+        if(offsetDateTimeChange.getDateDebut().isAfter(offsetDateTimeChange.getDateFin()) || offsetDateTimeChange.getDateDebut().isEqual(offsetDateTimeChange.getDateFin()))
             throw new DateTimeIntervalIsNotAIntervalException();
         else if (offsetDateTimeChange.getDateDebut().isBefore(OffsetDateTime.now()) || offsetDateTimeChange.getDateFin().isBefore(OffsetDateTime.now()))
             throw new DateTimeIsInPastException();
         UserDTO userConnected = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        VacanceDTO vacanceDTOToEditActiviteIn = vacanceRepository.findByIdAndParticipantsContains(offsetDateTimeChange.getId(), userConnected)
+        VacanceDTO vacanceDTOToEditActiviteIn = vacanceRepository.findByIdAndParticipantsContains(idvacance, userConnected)
                 .orElseThrow(VacanceNotFoundException::new);
+        if(vacanceDTOToEditActiviteIn.getActivites().stream().noneMatch(activite -> activite.getId().longValue() == idActivite.longValue())){
+            throw new VacanceNotFoundException();
+        }
         if(!vacanceDTOToEditActiviteIn.intervalIsInside(offsetDateTimeChange.getDateDebut(), offsetDateTimeChange.getDateFin()))
             throw new IntervalActiviteIsNotInIntervalVacanceException();
-        else if (vacanceDTOToEditActiviteIn.userHasAlreadyAtciviteForDateTimeIntervalWithOutOneActi(userConnected, offsetDateTimeChange.getDateDebut(), offsetDateTimeChange.getDateFin(), offsetDateTimeChange.getId())) // ne pas tenir compte de l'acti qu'on veut modifier
+        else if (vacanceDTOToEditActiviteIn.userHasAlreadyAtciviteForDateTimeIntervalWithOutOneActi(userConnected, offsetDateTimeChange.getDateDebut(), offsetDateTimeChange.getDateFin(), idActivite)) // ne pas tenir compte de l'acti qu'on veut modifier
             throw new UserAlreadyInActiviteException();
 
-        ActiviteDTO activiteDTOToEdit = vacanceDTOToEditActiviteIn.editDateOfActivite(offsetDateTimeChange.getId(), offsetDateTimeChange.getDateDebut(), offsetDateTimeChange.getDateFin());
+        ActiviteDTO activiteDTOToEdit = vacanceDTOToEditActiviteIn.editDateOfActivite(idActivite, offsetDateTimeChange.getDateDebut(), offsetDateTimeChange.getDateFin());
         if(activiteDTOToEdit == null)
             throw new ActiviteNotFoundException();
         return modelMapper.map(activiteRepository.saveAndFlush(activiteDTOToEdit), Activite.class);

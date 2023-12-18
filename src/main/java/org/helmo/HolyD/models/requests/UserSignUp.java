@@ -53,6 +53,9 @@ public class UserSignUp {
         return RoleType.USER;
     }
 
+    public String toJsonObject() {
+        return "{ \"email\": \"" + email + "\", \"nom\": \"" + nom + "\", \"passwd\": \""+ passwd +"\", \"prenom\": \""+ prenom +"\"}";
+    }
     @Override
     public String toString() {
         return "UserSignUp{" +

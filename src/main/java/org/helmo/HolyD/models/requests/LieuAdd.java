@@ -81,6 +81,17 @@ public class LieuAdd {
         this.pays = pays;
     }
 
+    public String toJsonObject() {
+        return "{" +
+                "\"longitude\": " + longitude +
+                ", \"latitude\": " + latitude +
+                ", \"rue\": \"" + rue + '\"' +
+                ", \"rueNumero\": \"" + rueNumero + '\"' +
+                ", \"codePostal\": \"" + codePostal + '\"' +
+                ", \"ville\": \"" + ville + '\"' +
+                ", \"pays\": \"" + pays + '\"' +
+                '}';
+    }
     @Override
     public String toString() {
         return "LieuAdd{" +

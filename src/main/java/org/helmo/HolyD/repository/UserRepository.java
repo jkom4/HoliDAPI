@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.Tuple;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -17,6 +19,8 @@ public interface UserRepository extends JpaRepository<UserDTO, Long> {
 
     Optional<UserDTO> findByEmailAndPasswd(String email, String passwd); //to SignIn
     boolean existsByEmail(String email); // to verifie if email already exist
+
+    void deleteByEmail(String email);
 
     Optional<UserDTO> findByEmail(String email);
 

@@ -4,22 +4,12 @@ import java.time.OffsetDateTime;
 
 public class OffsetDateTimeChange {
 
-    private Long id;
     private OffsetDateTime dateDebut;
     private OffsetDateTime dateFin;
 
-    public OffsetDateTimeChange(Long id, OffsetDateTime dateDebut, OffsetDateTime dateFin) {
-        this.id = id;
+    public OffsetDateTimeChange(OffsetDateTime dateDebut, OffsetDateTime dateFin) {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public OffsetDateTime getDateDebut() {

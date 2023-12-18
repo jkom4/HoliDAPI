@@ -129,9 +129,9 @@ public class ActiviteDTO {
         ActiviteDTO activite = (ActiviteDTO) o;
         return id.equals(activite.id);
     }
-    public boolean intervalIsInside(OffsetDateTime dateDebut, OffsetDateTime dateFin){
-        return ((dateDebut.isAfter(this.dateDebut) || dateDebut.equals(this.dateDebut)) &&
-                (dateFin.isBefore(this.dateFin) || dateFin.equals(this.dateFin)));
+    public boolean intervalIsCrossed(OffsetDateTime dateDebut, OffsetDateTime dateFin){
+        return ((this.dateDebut.isBefore(dateFin) || this.dateDebut.isEqual(dateFin)) &&
+                (this.dateFin.isAfter(dateDebut) || this.dateFin.isEqual(dateDebut)));
     }
     public boolean userIsInside(UserDTO userDTO){
         return this.participants.contains(userDTO);

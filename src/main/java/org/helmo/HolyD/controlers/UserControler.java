@@ -1,6 +1,5 @@
 package org.helmo.HolyD.controlers;
 
-import org.helmo.HolyD.controlers.exception.DateTimeIntervalIsNotAIntervalException;
 import org.helmo.HolyD.controlers.swagger.UserControlerSwagger;
 import org.helmo.HolyD.models.reponses.NbrUserAndNbrUserInHoliday;
 import org.helmo.HolyD.models.reponses.User;

@@ -1,11 +1,11 @@
 package org.helmo.HolyD.models.requests;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.time.OffsetDateTime;
 
 public class ActiviteAdd {
 
-    private Long idVacance;
     @Size(min = 2, max = 50, message = "Wrong name size min=2 max=50")
     private String nom;
     @Size(min = 2, max = 250, message = "Wrong description size min=2 max=250")
@@ -14,13 +14,6 @@ public class ActiviteAdd {
     private OffsetDateTime dateFin;
     private LieuAdd lieu;
 
-    public Long getIdVacance() {
-        return idVacance;
-    }
-
-    public void setIdVacance(Long idVacance) {
-        this.idVacance = idVacance;
-    }
 
     public String getNom() {
         return nom;
@@ -65,8 +58,7 @@ public class ActiviteAdd {
     @Override
     public String toString() {
         return "ActiviteAdd{" +
-                "idVacance=" + idVacance +
-                ", nom='" + nom + '\'' +
+                "nom='" + nom + '\'' +
                 ", description='" + description + '\'' +
                 ", dateDebut=" + dateDebut +
                 ", dateFin=" + dateFin +

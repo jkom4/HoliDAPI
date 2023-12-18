@@ -170,8 +170,8 @@ public class UserDTO {
     public boolean userIsAlreadyInHoliday(OffsetDateTime dateDebut, OffsetDateTime dateFin){
         return vacances.stream()
                 .anyMatch((holiD) ->
-                        ((holiD.getDateDebut().isBefore(dateFin) || holiD.getDateDebut().equals(dateFin)) &&
-                        (holiD.getDateFin().isAfter(dateDebut) || holiD.getDateFin().equals(dateFin))));
+                        ((holiD.getDateDebut().isBefore(dateFin) || holiD.getDateDebut().isEqual(dateFin)) &&
+                                (holiD.getDateFin().isAfter(dateDebut) || holiD.getDateFin().isEqual(dateDebut))));
     }
     @Override
     public boolean equals(Object o) {

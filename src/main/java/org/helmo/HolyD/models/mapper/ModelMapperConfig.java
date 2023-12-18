@@ -21,8 +21,6 @@ public class ModelMapperConfig {
                .addMapping(UserSignUp::getDefaultRoleType, UserDTO::setRoleWithRoleType);
         modelMapper.typeMap(UserSignInWithProvider.class, UserDTO.class)
                 .addMapping(UserSignInWithProvider::getDefaultRoleType, UserDTO::setRoleWithRoleType);
-        modelMapper.typeMap(ActiviteAdd.class, ActiviteDTO.class)
-                .addMappings(mapping -> mapping.skip(ActiviteAdd::getIdVacance, ActiviteDTO::setId));
         return modelMapper;
     }
 }

@@ -42,7 +42,7 @@ public class VacanceDTO {
     @ManyToOne(optional = false, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
     private LieuDTO lieu;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy="vacance", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="vacance", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
     private Set<MessageDTO> messages = new HashSet<>();
 
     public Long getId() {
@@ -131,21 +131,25 @@ public class VacanceDTO {
     public void setMessages(Set<MessageDTO> messages) {
         this.messages = messages;
     }
-
-    public boolean intervalIsInside(OffsetDateTime dateDebut, OffsetDateTime dateFin){ //A reverifier
-        return ((dateDebut.isAfter(this.dateDebut) || dateDebut.equals(this.dateDebut)) &&
-                (dateFin.isBefore(this.dateFin) || dateFin.equals(this.dateFin)));
+    public void addMessage(MessageDTO messageDTO, UserDTO userDTO){
+        messageDTO.setSendingDate(OffsetDateTime.now());
+        messageDTO.setSender(userDTO);
+        this.messages.add(messageDTO);
+    }
+    public boolean intervalIsInside(OffsetDateTime dateDebut, OffsetDateTime dateFin){
+        return ((dateDebut.isAfter(this.dateDebut) || dateDebut.isEqual(this.dateDebut)) &&
+                (dateFin.isBefore(this.dateFin) || dateFin.isEqual(this.dateFin)));
     }
     public boolean userHasAlreadyAtciviteForDateTimeInterval(UserDTO userDTO, OffsetDateTime dateDebut, OffsetDateTime dateFin){
         for (ActiviteDTO acti : this.activites) {
-            if(acti.intervalIsInside(dateDebut, dateFin) && acti.userIsInside(userDTO))
+            if(acti.intervalIsCrossed(dateDebut, dateFin) && acti.userIsInside(userDTO))
                 return true;
         }
         return false;
     }
     public boolean userHasAlreadyAtciviteForDateTimeIntervalWithOutOneActi(UserDTO userDTO, OffsetDateTime dateDebut, OffsetDateTime dateFin, Long idActivite){
         for (ActiviteDTO acti : this.activites) {
-            if(Objects.equals(acti.getId(), idActivite) && acti.intervalIsInside(dateDebut, dateFin) && acti.userIsInside(userDTO))
+            if(Objects.equals(acti.getId(), idActivite) && acti.intervalIsCrossed(dateDebut, dateFin) && acti.userIsInside(userDTO))
                 return true;
         }
         return false;

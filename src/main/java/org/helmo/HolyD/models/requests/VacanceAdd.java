@@ -51,7 +51,15 @@ public class VacanceAdd {
     public void setLieu(LieuAdd lieu) {
         this.lieu = lieu;
     }
-
+    public String toJsonObject() {
+        return "{" +
+                "\"nom\": \"" + nom + '\"' +
+                ", \"description\": \"" + description + '\"' +
+                ", \"dateDebut\": \"" + dateDebut + '\"' +
+                ", \"dateFin\": \"" + dateFin + '\"' +
+                ", \"lieu\": " + lieu.toJsonObject() +
+                '}';
+    }
     @Override
     public String toString() {
         return "VacanceAdd{" +
