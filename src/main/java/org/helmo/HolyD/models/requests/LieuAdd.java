@@ -20,7 +20,7 @@ public class LieuAdd {
 
     @Size(max = 15, message = "Wrong postal code size max=15")
     private String codePostal;
-    @Size(min = 2, max = 50, message = "Wrong city size min=2 max=50")
+    @Size(max = 50, message = "Wrong city size max=50")
     private String ville;
     @Size(min = 2, max = 50, message = "Wrong country size min=2 max=50")
     private String pays;
