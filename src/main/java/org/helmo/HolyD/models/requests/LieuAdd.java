@@ -1,17 +1,16 @@
 package org.helmo.HolyD.models.requests;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
+import java.math.BigDecimal;
 
 public class LieuAdd {
 
-    @Min(value = -180, message = "Wrong longitude size min=-180")
-    @Max(value = 180, message = "Wrong longitude size max=180")
-    private double longitude;
-    @Min(value = -90, message = "Wrong latitude size max=90")
-    @Max(value = 90, message = "Wrong latitude size max=90")
-    private double latitude;
+    @DecimalMin(value = "-180.000000", message = "Wrong longitude size min=-180")
+    @DecimalMax(value = "180.000000", message = "Wrong longitude size max=180")
+    private BigDecimal longitude;
+    @DecimalMin(value = "-90.000000", message = "Wrong latitude size max=90")
+    @DecimalMax(value = "90.000000", message = "Wrong latitude size max=90")
+    private BigDecimal latitude;
     @Size(max = 70, message = "Wrong street size max=70")
     private String rue;
 
@@ -25,19 +24,19 @@ public class LieuAdd {
     @Size(min = 2, max = 50, message = "Wrong country size min=2 max=50")
     private String pays;
 
-    public double getLongitude() {
+    public BigDecimal getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
     }
 
-    public double getLatitude() {
+    public BigDecimal getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(BigDecimal latitude) {
         this.latitude = latitude;
     }
 

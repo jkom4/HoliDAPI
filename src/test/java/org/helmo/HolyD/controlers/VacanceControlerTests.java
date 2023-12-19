@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -66,8 +67,8 @@ public class VacanceControlerTests {
         this.vacanceToAdd.setNom("Name");
         this.vacanceToAdd.setDescription("Name");
         LieuAdd lieuAdd = new LieuAdd();
-        lieuAdd.setLatitude(10);
-        lieuAdd.setLongitude(10);
+        lieuAdd.setLatitude(BigDecimal.valueOf(10));
+        lieuAdd.setLongitude(BigDecimal.valueOf(10));
         lieuAdd.setRue("Rue des rues");
         lieuAdd.setRueNumero("22");
         lieuAdd.setPays("Bazerty");

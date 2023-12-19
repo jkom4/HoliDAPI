@@ -5,6 +5,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -19,11 +20,11 @@ public class LieuDTO {
     @Min(value = -180, message = "Wrong longitude size min=-180")
     @Max(value = 180, message = "Wrong longitude size max=180")
     @Column(scale = 6, precision = 9, nullable = false)
-    private double longitude;
+    private BigDecimal longitude;
     @Min(value = -90, message = "Wrong latitude size max=90")
     @Max(value = 90, message = "Wrong latitude size max=90")
     @Column(scale = 6, precision = 8, nullable = false)
-    private double latitude;
+    private BigDecimal latitude;
 
     @Size(max = 70, message = "Wrong street size max=70")
     @Column(length = 70, nullable = true)
@@ -52,19 +53,19 @@ public class LieuDTO {
         this.id = id;
     }
 
-    public double getLongitude() {
+    public BigDecimal getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
     }
 
-    public double getLatitude() {
+    public BigDecimal getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(BigDecimal latitude) {
         this.latitude = latitude;
     }
 
