@@ -42,7 +42,7 @@ public class VacanceDTO {
     @ManyToOne(optional = false, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
     private LieuDTO lieu;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy="vacance", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
+    @OneToMany(mappedBy="vacance", cascade={CascadeType.ALL}, orphanRemoval=true) // Bug si non All (veut inserer null dans content alors que content n'est pas vide)
     private Set<MessageDTO> messages = new HashSet<>();
 
     public Long getId() {
@@ -134,6 +134,7 @@ public class VacanceDTO {
     public void addMessage(MessageDTO messageDTO, UserDTO userDTO){
         messageDTO.setSendingDate(OffsetDateTime.now());
         messageDTO.setSender(userDTO);
+        messageDTO.setVacance(this);
         this.messages.add(messageDTO);
     }
     public boolean intervalIsInside(OffsetDateTime dateDebut, OffsetDateTime dateFin){
