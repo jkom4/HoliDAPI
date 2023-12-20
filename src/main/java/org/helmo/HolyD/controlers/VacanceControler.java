@@ -71,7 +71,7 @@ public class VacanceControler implements VacanceControlerSwagger {
     }
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/{idVacance}/message")
+    @GetMapping(value = "/{idVacance}/message", produces = MediaType.APPLICATION_JSON_VALUE)
     public Vacance getMessages(@Valid @Min(1) @PathVariable("idVacance") Long idVacance){
         return vacanceService.getMessages(idVacance);
     }
