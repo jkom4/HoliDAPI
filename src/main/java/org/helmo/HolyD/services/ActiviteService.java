@@ -54,7 +54,7 @@ public class ActiviteService {
         UserDTO userConnected = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDTO userDTO = userRepository.findByEmail(participantAdd.getEmail())
                 .orElseThrow(UserNotFoundException::new);
-        ActiviteDTO activiteDTO = activiteRepository.findByIdAndParticipantsContains(idActivite, userConnected)
+        ActiviteDTO activiteDTO = activiteRepository.findById(idActivite)
                 .orElseThrow(ActiviteNotFoundException::new);
         if(idvacance.longValue() != activiteDTO.getVacance().getId()) {
             throw new ActiviteNotFoundException();
