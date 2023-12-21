@@ -18,7 +18,7 @@ import javax.validation.constraints.Min;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/vacance", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/vacance")
 public class VacanceControler implements VacanceControlerSwagger {
 
     private final VacanceService vacanceService;
@@ -32,40 +32,40 @@ public class VacanceControler implements VacanceControlerSwagger {
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Vacance addVacance(@Valid @RequestBody VacanceAdd vacanceAdd) {
         return vacanceService.add(vacanceAdd);
     }
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping(value = "/{idVacance}/participant")
+    @PostMapping(value = "/{idVacance}/participant", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Vacance addParticipantToVacance(@Valid @Min(1) @PathVariable("idVacance") Long idVacance, @Valid @RequestBody ParticipantAdd participantAdd) {
         return vacanceService.addParticipant(idVacance, participantAdd);
     }
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping(value = "/{idVacance}/activite")
+    @PostMapping(value = "/{idVacance}/activite", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Activite add(@Valid @Min(1) @PathVariable("idVacance") Long idVacance, @Valid @RequestBody ActiviteAdd activiteAdd) {
         return activiteService.add(idVacance, activiteAdd);
     }
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping(value = "/{idVacance}/activite/{idActivite}/participant")
+    @PostMapping(value = "/{idVacance}/activite/{idActivite}/participant", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Activite addParticipantToActivite(@Valid @Min(1) @PathVariable("idVacance") Long idVacance, @Valid @Min(1) @PathVariable("idActivite") Long idActivite, @Valid @RequestBody ParticipantAdd participantAdd) {
         return activiteService.addParticipant(idVacance, idActivite, participantAdd);
     }
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping(value = "/{idVacance}/activite/{idActivite}/changeDates")
+    @PutMapping(value = "/{idVacance}/activite/{idActivite}/changeDates", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Activite changeDateTimeOfActivite(@Valid @Min(1) @PathVariable("idVacance") Long idVacance, @Valid @Min(1) @PathVariable("idActivite") Long idActivite, @Valid @RequestBody OffsetDateTimeChange offsetDateTimeChange) {
         return activiteService.changeDateActivite(idVacance, idActivite, offsetDateTimeChange);
     }
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping(value = "/{idVacance}/message")
+    @PostMapping(value = "/{idVacance}/message", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Vacance addMessage(@Valid @Min(1) @PathVariable("idVacance") Long idVacance, @Valid @RequestBody MessageAdd messageAdd){
         return vacanceService.addMessage(idVacance, messageAdd);
     }
