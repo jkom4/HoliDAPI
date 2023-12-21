@@ -74,7 +74,7 @@ public class VacanceService {
         vacanceDTO.addMessage(modelMapper.map(messageAdd, MessageDTO.class), userConnected);
         return modelMapper.map(vacanceRepository.saveAndFlush(vacanceDTO), Vacance.class);
     }
-    public Vacance getMessages(Long idVacance){
+    public Vacance getMessages(Long idVacance){ // changer en list si le temps
         UserDTO userConnected = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         VacanceDTO vacanceDTO = vacanceRepository.findByIdAndParticipantsContains(idVacance, userConnected)
                 .orElseThrow(VacanceNotFoundException::new);
