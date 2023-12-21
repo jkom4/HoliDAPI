@@ -50,7 +50,6 @@ public class VacanceService {
         vacanceDTOToAdd.setOwner(userConnected);
         vacanceDTOToAdd.addParticipant(userConnected);
         VacanceDTO vacanceDTOSaved = vacanceRepository.saveAndFlush(vacanceDTOToAdd);
-        //sendMessageSSEToclients(Set<Long> usersId);
         return modelMapper.map(vacanceDTOSaved, Vacance.class);
     }
 
@@ -66,7 +65,8 @@ public class VacanceService {
         if(!vacanceDTO.addParticipant(userDTO)){
             throw new UserAlreadyInsideException();
         }
-        //sendMessageSSEToclients(Set<Long> usersId);
+        //Set<Long> usersId = vacanceDTO.getParticipants().stream().map(UserDTO::getId).collect(Collectors.toSet());
+        //sendMessageSSEToclients(usersId, true);
         return modelMapper.map(vacanceRepository.saveAndFlush(vacanceDTO), Vacance.class);
     }
 
