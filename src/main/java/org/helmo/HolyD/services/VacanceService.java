@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.Type;
 import java.time.OffsetDateTime;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class VacanceService {
@@ -49,6 +50,7 @@ public class VacanceService {
         vacanceDTOToAdd.setOwner(userConnected);
         vacanceDTOToAdd.addParticipant(userConnected);
         VacanceDTO vacanceDTOSaved = vacanceRepository.saveAndFlush(vacanceDTOToAdd);
+        //sendMessageSSEToclients(Set<Long> usersId);
         return modelMapper.map(vacanceDTOSaved, Vacance.class);
     }
 
@@ -64,6 +66,7 @@ public class VacanceService {
         if(!vacanceDTO.addParticipant(userDTO)){
             throw new UserAlreadyInsideException();
         }
+        //sendMessageSSEToclients(Set<Long> usersId);
         return modelMapper.map(vacanceRepository.saveAndFlush(vacanceDTO), Vacance.class);
     }
 
@@ -74,6 +77,8 @@ public class VacanceService {
         vacanceDTO.addMessage(modelMapper.map(messageAdd, MessageDTO.class), userConnected);
         vacanceDTO = vacanceRepository.saveAndFlush(vacanceDTO);
         vacanceDTO.setMessages(messageRepository.findTop100ByVacanceOrderBySendingDateDesc(vacanceDTO));
+        //Set<Long> usersId = vacanceDTO.getParticipants().stream().map(UserDTO::getId).collect(Collectors.toSet());
+        //sendMessageSSEToclients(usersId, false);
         return modelMapper.map(vacanceDTO, Vacance.class);
     }
     public Vacance getMessages(Long idVacance){ // changer en list si le temps

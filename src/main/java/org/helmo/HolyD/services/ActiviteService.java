@@ -47,6 +47,7 @@ public class ActiviteService {
         activiteDTOToAdd.setOwner(userConnected);
         activiteDTOToAdd.addParticipant(userConnected);
         activiteDTOToAdd.setVacance(vacanceDTOToAddActiviteIn);
+        //sendMessageSSEToclients(Set<Long> usersId);
         return modelMapper.map(activiteRepository.saveAndFlush(activiteDTOToAdd), Activite.class);
     }
 
@@ -66,6 +67,7 @@ public class ActiviteService {
         if(!activiteDTO.addParticipant(userDTO)){
             throw new UserAlreadyInsideException(); // Exception qui ne sera plus levée
         }
+        //sendMessageSSEToclients(Set<Long> usersId);
         return modelMapper.map(activiteRepository.saveAndFlush(activiteDTO), Activite.class);
     }
 
@@ -88,6 +90,7 @@ public class ActiviteService {
         ActiviteDTO activiteDTOToEdit = vacanceDTOToEditActiviteIn.editDateOfActivite(idActivite, offsetDateTimeChange.getDateDebut(), offsetDateTimeChange.getDateFin());
         if(activiteDTOToEdit == null)
             throw new ActiviteNotFoundException();
+        //sendMessageSSEToclients(Set<Long> usersId);
         return modelMapper.map(activiteRepository.saveAndFlush(activiteDTOToEdit), Activite.class);
     }
 }
