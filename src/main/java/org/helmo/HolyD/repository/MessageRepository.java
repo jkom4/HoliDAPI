@@ -7,6 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Set;
 
 public interface MessageRepository extends JpaRepository<MessageDTO, Long> {
-
-    Set<MessageDTO> findTopByVacanceOrderBySendingDateDesc(VacanceDTO vacanceDTO);
+    Set<MessageDTO> findTop100ByVacanceOrderBySendingDateDesc(VacanceDTO vacanceDTO);
 }

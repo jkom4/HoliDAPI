@@ -77,7 +77,8 @@ public class VacanceService {
         UserDTO userConnected = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         VacanceDTO vacanceDTO = vacanceRepository.findByIdAndParticipantsContains(idVacance, userConnected)
                 .orElseThrow(VacanceNotFoundException::new);
-        vacanceDTO.setMessages(messageRepository.findTopByVacanceOrderBySendingDateDesc(vacanceDTO));
+        System.out.println(messageRepository.findTop100ByVacanceOrderBySendingDateDesc(vacanceDTO));
+        vacanceDTO.setMessages(messageRepository.findTop100ByVacanceOrderBySendingDateDesc(vacanceDTO));
         return modelMapper.map(vacanceDTO, Vacance.class);
     }
 }
