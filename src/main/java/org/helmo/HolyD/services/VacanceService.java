@@ -13,6 +13,7 @@ import org.helmo.HolyD.repository.UserRepository;
 import org.helmo.HolyD.repository.VacanceRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -77,7 +78,6 @@ public class VacanceService {
         UserDTO userConnected = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         VacanceDTO vacanceDTO = vacanceRepository.findByIdAndParticipantsContains(idVacance, userConnected)
                 .orElseThrow(VacanceNotFoundException::new);
-        System.out.println(messageRepository.findTop100ByVacanceOrderBySendingDateDesc(vacanceDTO));
         vacanceDTO.setMessages(messageRepository.findTop100ByVacanceOrderBySendingDateDesc(vacanceDTO));
         return modelMapper.map(vacanceDTO, Vacance.class);
     }
