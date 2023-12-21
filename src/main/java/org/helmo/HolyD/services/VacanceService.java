@@ -72,7 +72,9 @@ public class VacanceService {
         VacanceDTO vacanceDTO = vacanceRepository.findByIdAndParticipantsContains(idvacance, userConnected)
                 .orElseThrow(VacanceNotFoundException::new);
         vacanceDTO.addMessage(modelMapper.map(messageAdd, MessageDTO.class), userConnected);
-        return modelMapper.map(vacanceRepository.saveAndFlush(vacanceDTO), Vacance.class);
+        vacanceDTO = vacanceRepository.saveAndFlush(vacanceDTO);
+        vacanceDTO.setMessages(messageRepository.findTop100ByVacanceOrderBySendingDateDesc(vacanceDTO));
+        return modelMapper.map(vacanceDTO, Vacance.class);
     }
     public Vacance getMessages(Long idVacance){ // changer en list si le temps
         UserDTO userConnected = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
