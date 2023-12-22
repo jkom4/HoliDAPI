@@ -30,7 +30,11 @@ public class JwtService {
         return this.generate((UserDTODetails) userDTODetailsService.loadUserByUsername(email));
     }
     public String extractUsername(String token) {
-        return getClaim(token, Claims::getSubject);
+        try {
+            return getClaim(token, Claims::getSubject);
+        }catch (ExpiredJwtException ex){
+            return null;
+        }
     }
 
     public boolean isTokenExpired(String token) {
