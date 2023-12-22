@@ -1,6 +1,7 @@
 package org.helmo.HolyD.secure.jwt;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -33,7 +34,11 @@ public class JwtService {
     }
 
     public boolean isTokenExpired(String token) {
-        return getClaim(token, Claims::getExpiration).before(new Date());
+        try {
+            return getClaim(token, Claims::getExpiration).before(new Date());
+        }catch (ExpiredJwtException ex){
+            return true;
+        }
     }
     private String generate(UserDTODetails userDTODetails){
         final long currentTime = System.currentTimeMillis();
