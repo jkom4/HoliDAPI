@@ -8,10 +8,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.helmo.HolyD.controlers.exception.UserAlreadyExistException;
 import org.helmo.HolyD.controlers.exception.UserNotFoundException;
-import org.helmo.HolyD.models.reponses.User;
-import org.helmo.HolyD.models.requests.UserSignIn;
-import org.helmo.HolyD.models.requests.UserSignUp;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Api(tags = "sse")
