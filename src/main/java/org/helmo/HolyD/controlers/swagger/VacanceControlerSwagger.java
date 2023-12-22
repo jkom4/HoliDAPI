@@ -68,7 +68,7 @@ public interface VacanceControlerSwagger {
     })
     Activite addParticipantToActivite(@Valid @Min(1) @PathVariable("idVacance") Long idVacance, @Valid @Min(1) @PathVariable("idActivite") Long idActivite, @Valid @RequestBody ParticipantAdd participantAdd);
 
-    @Operation(operationId = "VacanceControler", summary = "Add participant to an activite.", description = "Return Successful or error")
+    @Operation(operationId = "VacanceControler", summary = "Change begin and end date of an activite.", description = "Return Successful or error")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Activite.class)), description = "Successful"),
             @ApiResponse(responseCode = UserNotFoundException.STATUCODE_ERROR, description = UserNotFoundException.MESSAGE_ERROR),
