@@ -73,6 +73,7 @@ public class ControlerExceptionHandler {
     Error userAlreadyInHolidayExceptionHandler(UserAlreadyInHolidayException ex) {
         return ex.getERROR();
     }
+
     @ResponseBody
     @ExceptionHandler(UserAlreadyInActiviteException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -80,5 +81,18 @@ public class ControlerExceptionHandler {
         return ex.getERROR();
     }
 
+    @ResponseBody
+    @ExceptionHandler(StorageException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Error StorageExceptionHandler(StorageException ex) {
+        return ex.getERROR();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(DocumentNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    Error DocumentNotFoundExceptionHandler(DocumentNotFoundException ex) {
+        return ex.getERROR();
+    }
 
 }

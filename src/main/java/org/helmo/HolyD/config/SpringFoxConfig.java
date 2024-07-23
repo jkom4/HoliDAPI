@@ -19,8 +19,7 @@ import java.util.List;
 public class SpringFoxConfig {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final List<String> DEFAULT_INCLUDE_PATTERN = Arrays.asList("/vacance", "/REST_AHME_VERD_WABO/vacance",
-            "/sse", "/REST_AHME_VERD_WABO/sse");
+    public static final List<String> DEFAULT_INCLUDE_PATTERN = Arrays.asList("/vacance", "/document", "/REST_AHME_VERD_WABO/vacance", "/REST_AHME_VERD_WABO/document");
 
     @Bean
     public Docket api() {
@@ -30,7 +29,7 @@ public class SpringFoxConfig {
                 .apiInfo(apiInfo())
                 .tags(new Tag("user", "Sign service & tools"),
                         new Tag("vacance", "Vacance service"),
-                        new Tag("sse", "SSE service"))
+                        new Tag("document", "Document service"))
                 .useDefaultResponseMessages(false)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("org.helmo.HolyD.controlers"))

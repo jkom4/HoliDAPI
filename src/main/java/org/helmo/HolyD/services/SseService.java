@@ -24,7 +24,6 @@ public class SseService {
         emittersMap.put(userId, emitter);
         emitter.onCompletion(() -> emittersMap.remove(userId, emitter));
         emitter.onTimeout(() -> emittersMap.remove(userId, emitter));
-        System.out.println("User: %d connected to SSE flux");
         return emitter;
     }
     public void delEmitter() {
@@ -33,7 +32,6 @@ public class SseService {
             SseEmitter emitter = emittersMap.get(userId);
             emitter.complete();
             emittersMap.remove(userId, emitter); //Pour être sûr
-            System.out.println("User : %d disconnected to SSE flux");
         }else {
             throw new UserNotFoundException();
         }

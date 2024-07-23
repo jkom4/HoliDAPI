@@ -5,16 +5,22 @@ import org.helmo.HolyD.models.reponses.Activite;
 import org.helmo.HolyD.models.reponses.Vacance;
 import org.helmo.HolyD.models.requests.*;
 import org.helmo.HolyD.services.ActiviteService;
+import org.helmo.HolyD.services.StorageService;
 import org.helmo.HolyD.services.VacanceService;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -27,6 +33,7 @@ public class VacanceControler implements VacanceControlerSwagger {
     public VacanceControler(VacanceService vacanceService, ActiviteService activiteService) {
         this.vacanceService = vacanceService;
         this.activiteService = activiteService;
+
     }
 
 
@@ -59,7 +66,7 @@ public class VacanceControler implements VacanceControlerSwagger {
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping(value = "/{idVacance}/activite/{idActivite}/changeDates", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{idVacance}/activite/{idActivite}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Activite changeDateTimeOfActivite(@Valid @Min(1) @PathVariable("idVacance") Long idVacance, @Valid @Min(1) @PathVariable("idActivite") Long idActivite, @Valid @RequestBody OffsetDateTimeChange offsetDateTimeChange) {
         return activiteService.changeDateActivite(idVacance, idActivite, offsetDateTimeChange);
     }
