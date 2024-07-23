@@ -68,25 +68,17 @@ public class DocumentControler implements DocumentControlerSwagger {
     //Download File
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/vacance/{idVacance}/{filename}")
+    @GetMapping(value = "/vacance/{idVacance}/{filename}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Resource getVacanceDocument(@Valid @Min(1) @PathVariable("idVacance") Long idVacance, @Valid @Min(1) @PathVariable("filename") String filename, HttpServletResponse response) {
-        Resource resource = storageService.getFileAsResource(idVacance, filename);
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"");
-        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-        try {
-            response.setContentLength((int) resource.contentLength());
-        }catch (IOException e) {
-            throw new StorageException();
-        }
-        return resource;
+        return storageService.getFileAsResource(idVacance, filename);
     }
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/vacance/{idVacance}/activity/{idActivity}/{filename}")
+    @GetMapping(value = "/vacance/{idVacance}/activity/{idActivity}/{filename}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Resource getActivityDocument(@Valid @Min(1) @PathVariable("idVacance") Long idVacance, @Valid @Min(1) @PathVariable("idActivity") Long idActivity, @Valid @Min(1) @PathVariable("filename") String filename, HttpServletResponse response) {
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"");
-        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
         return storageService.getFileAsResource(idVacance, idActivity, filename);
     }
 }
