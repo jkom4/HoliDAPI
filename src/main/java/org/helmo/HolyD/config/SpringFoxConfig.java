@@ -19,7 +19,7 @@ import java.util.List;
 public class SpringFoxConfig {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final List<String> DEFAULT_INCLUDE_PATTERN = Arrays.asList("/vacance", "/document", "/REST_AHME_VERD_WABO/vacance", "/REST_AHME_VERD_WABO/document");
+    public static final List<String> DEFAULT_INCLUDE_PATTERN = Arrays.asList("/vacance", "/document", "/REST_VERD_WABO/vacance", "/REST_VERD_WABO/document");
 
     @Bean
     public Docket api() {
