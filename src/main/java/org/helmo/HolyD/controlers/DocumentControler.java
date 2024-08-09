@@ -1,13 +1,7 @@
 package org.helmo.HolyD.controlers;
 
-import org.helmo.HolyD.controlers.exception.StorageException;
 import org.helmo.HolyD.controlers.swagger.DocumentControlerSwagger;
-import org.helmo.HolyD.controlers.swagger.VacanceControlerSwagger;
-import org.helmo.HolyD.models.reponses.Vacance;
-import org.helmo.HolyD.models.requests.VacanceAdd;
-import org.helmo.HolyD.services.ActiviteService;
 import org.helmo.HolyD.services.StorageService;
-import org.helmo.HolyD.services.VacanceService;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,8 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -45,7 +37,7 @@ public class DocumentControler implements DocumentControlerSwagger {
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping(value = "/vacance/{idVacance}/activity/{idActivity}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/vacance/{idVacance}/activite/{idActivity}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void fileActivityUpload(@Valid @Min(1) @PathVariable("idVacance") Long idVacance, @Valid @Min(1) @PathVariable("idActivity") Long idActivity, @Validated @RequestPart("file") MultipartFile file) {
         storageService.store(file, idVacance, idActivity);
     }
@@ -60,7 +52,7 @@ public class DocumentControler implements DocumentControlerSwagger {
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/vacance/{idVacance}/activity/{idActivity}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/vacance/{idVacance}/activite/{idActivity}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> listActivityFilenameDocuments(@Valid @Min(1) @PathVariable("idVacance") Long idVacance, @Valid @Min(1) @PathVariable("idActivity") Long idActivity) {
         return storageService.listFilesNames(idVacance, idActivity);
     }
@@ -76,7 +68,7 @@ public class DocumentControler implements DocumentControlerSwagger {
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/vacance/{idVacance}/activity/{idActivity}/{filename}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @GetMapping(value = "/vacance/{idVacance}/activite/{idActivity}/{filename}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Resource getActivityDocument(@Valid @Min(1) @PathVariable("idVacance") Long idVacance, @Valid @Min(1) @PathVariable("idActivity") Long idActivity, @Valid @Min(1) @PathVariable("filename") String filename, HttpServletResponse response) {
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"");
         return storageService.getFileAsResource(idVacance, idActivity, filename);
