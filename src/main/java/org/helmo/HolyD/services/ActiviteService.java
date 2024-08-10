@@ -47,8 +47,6 @@ public class ActiviteService {
         activiteDTOToAdd.setOwner(userConnected);
         activiteDTOToAdd.addParticipant(userConnected);
         activiteDTOToAdd.setVacance(vacanceDTOToAddActiviteIn);
-        //Set<Long> usersId = vacanceDTOToAddActiviteIn.getParticipants().stream().map(UserDTO::getId).collect(Collectors.toSet());
-        //sendMessageSSEToclients(usersId, true);
         return modelMapper.map(activiteRepository.saveAndFlush(activiteDTOToAdd), Activite.class);
     }
 
@@ -68,8 +66,6 @@ public class ActiviteService {
         if(!activiteDTO.addParticipant(userDTO)){
             throw new UserAlreadyInsideException(); // Exception qui ne sera plus levée
         }
-        //Set<Long> usersId = vacanceDTO.getParticipants().stream().map(UserDTO::getId).collect(Collectors.toSet());
-        //sendMessageSSEToclients(usersId, true);
         return modelMapper.map(activiteRepository.saveAndFlush(activiteDTO), Activite.class);
     }
 
@@ -88,12 +84,12 @@ public class ActiviteService {
             throw new IntervalActiviteIsNotInIntervalVacanceException();
         else if (vacanceDTOToEditActiviteIn.userHasAlreadyAtciviteForDateTimeIntervalWithOutOneActi(userConnected, offsetDateTimeChange.getDateDebut(), offsetDateTimeChange.getDateFin(), idActivite)) // ne pas tenir compte de l'acti qu'on veut modifier
             throw new UserAlreadyInActiviteException();
-
+        if(!vacanceDTOToEditActiviteIn.isOwnerOfActivite(idActivite, userConnected.getId())){
+            throw new ActiviteNotFoundException();
+        }
         ActiviteDTO activiteDTOToEdit = vacanceDTOToEditActiviteIn.editDateOfActivite(idActivite, offsetDateTimeChange.getDateDebut(), offsetDateTimeChange.getDateFin());
         if(activiteDTOToEdit == null)
             throw new ActiviteNotFoundException();
-        //Set<Long> usersId = vacanceDTO.getParticipants().stream().map(UserDTO::getId).collect(Collectors.toSet());
-        //sendMessageSSEToclients(usersId, true);
         return modelMapper.map(activiteRepository.saveAndFlush(activiteDTOToEdit), Activite.class);
     }
 }

@@ -48,7 +48,7 @@ public class UserControler implements UserControlerSwagger {
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/nbrUserAndNbrUserInHolidayForADate", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/byHoliday", produces = MediaType.APPLICATION_JSON_VALUE)
     public NbrUserAndNbrUserInHoliday nbrUserAndNbrUserInHolidayForADate(@Valid @NotNull @RequestParam OffsetDateTime dateTime){
         return new NbrUserAndNbrUserInHoliday(userService.getNbrOfUser(), userService.getNbrOfUserInHolidayForADate(dateTime));
     }

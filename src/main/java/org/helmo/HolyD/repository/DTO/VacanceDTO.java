@@ -166,6 +166,15 @@ public class VacanceDTO {
         }
         return null;
     }
+    public boolean isOwnerOfActivite(Long idActivite, Long userId) {
+        for (ActiviteDTO acti : this.activites) {
+            if (acti.getId().equals(idActivite) && acti.getOwner().getId().equals(userId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     @Override
     public boolean equals(Object o) {
