@@ -35,7 +35,7 @@
     mvn spring-boot:run
     ```
 
-4. L'API sera disponible sur `http://localhost:8080`.
+4. L'API sera disponible sur `http://127.0.0.1:8080/swagger-ui/index.html`.
 
 ## Endpoints principaux
 
